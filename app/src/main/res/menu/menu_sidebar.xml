@@ -2,18 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:title="Menu">
+    <item android:title="Menu">
         <menu>
             <item
-                android:id="@+id/menu3"
+                android:id="@+id/menu1"
                 android:icon="@drawable/ic_baseline_photo_camera_24"
-                android:title="학사일정" />
+                android:title="학교 홈페이지" />
             <item
                 android:id="@+id/menu2"
                 android:icon="@drawable/ic_baseline_photo_camera_24"
-                android:title="포털"
-                app:actionTextColor="@color/purple_200"/>
+                android:title="포털" />
+            <item
+                android:id="@+id/menu3"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="학사 일정" />
             <item
                 android:id="@+id/menu4"
                 android:icon="@drawable/ic_baseline_photo_camera_24"
