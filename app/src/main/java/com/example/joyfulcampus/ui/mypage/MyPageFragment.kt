@@ -1,4 +1,4 @@
-package com.example.joyfulcampus.mypage
+package com.example.joyfulcampus.ui.mypage
 
 import android.os.Bundle
 import android.view.View

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Menu">
+        <menu>
+            <item
+                android:id="@+id/menu3"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="학사일정" />
+            <item
+                android:id="@+id/menu2"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="포털"
+                app:actionTextColor="@color/purple_200"/>
+            <item
+                android:id="@+id/menu4"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="학사 공지" />
+        </menu>
+    </item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/setting1"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="계정" />
+            <item
+                android:id="@+id/setting2"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="보안" />
+        </menu>
+    </item>
+
+    <item android:title="Notice">
+        <menu>
+            <item
+                android:id="@+id/notice1"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="알림1" />
+            <item
+                android:id="@+id/notice2"
+                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:title="알림2" />
+        </menu>
+    </item>
+
+</menu>

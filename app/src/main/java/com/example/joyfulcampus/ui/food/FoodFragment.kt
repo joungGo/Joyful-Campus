@@ -1,4 +1,4 @@
-package com.example.joyfulcampus.food
+package com.example.joyfulcampus.ui.food
 
 import android.os.Bundle
 import android.view.View

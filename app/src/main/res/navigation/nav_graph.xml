@@ -7,27 +7,28 @@
 
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.joyfulcampus.chat.ChatFragment"
+        android:name="com.example.joyfulcampus.ui.chat.ChatFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/clubFragment"
-        android:name="com.example.joyfulcampus.club.ClubFragment"
+        android:name="com.example.joyfulcampus.ui.club.ClubFragment"
         android:label="ClubFragment"
         tools:layout="@layout/fragment_club" />
     <fragment
         android:id="@+id/foodFragment"
-        android:name="com.example.joyfulcampus.food.FoodFragment"
+        android:name="com.example.joyfulcampus.ui.food.FoodFragment"
         android:label="FoodFragment"
         tools:layout="@layout/fragment_food" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.joyfulcampus.home.HomeFragment"
+        android:name="com.example.joyfulcampus.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.example.joyfulcampus.mypage.MyPageFragment"
+        android:name="com.example.joyfulcampus.ui.mypage.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage" />
+
 </navigation>

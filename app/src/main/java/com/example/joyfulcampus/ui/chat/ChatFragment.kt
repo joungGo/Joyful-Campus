@@ -1,4 +1,4 @@
-package com.example.joyfulcampus.chat
+package com.example.joyfulcampus.ui.chat
 
 import android.os.Bundle
 import android.view.View
