@@ -29,13 +29,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
 
-        // Toolbar
-        val toolbarBodyTemplate = binding.appBarMain.toolbar
-        setSupportActionBar(toolbarBodyTemplate)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 홈 버튼 활성화
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_apps_24)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbarBodyTemplate.title = "편안한 캠퍼스"
 
 // NavigationView의 메뉴 텍스트 색상 설정
         binding.mainSidebar.itemTextColor = ContextCompat.getColorStateList(this, R.color.black)

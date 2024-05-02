@@ -12,5 +12,10 @@ class ClubFragment: Fragment(R.layout.fragment_club) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentClubBinding.bind(view)
+
+
+
     }
+
+    // fragment_club.xml의 recyclerview와
 }
