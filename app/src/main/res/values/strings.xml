@@ -13,4 +13,9 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu">Menu</string>
     <string name="small_menu">메뉴</string>
+
+    <string name="signUp">회원가입</string>
+    <string name="signIn">로그인</string>
+    <string name="signOut">로그아웃</string>
+    <string name="upload">올리기</string>
 </resources>

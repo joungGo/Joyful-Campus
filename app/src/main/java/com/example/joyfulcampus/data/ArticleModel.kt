@@ -4,7 +4,7 @@ package com.example.joyfulcampus.data
 data class ArticleModel (
     val articleId: String? = null,
     val createdAt: Long? = null,
-    val clubNameText: String,
-    val description: String,
+    val clubNameText: String? = null,
+    val description: String? = null,
     val imageUrl: String? = null
 )
