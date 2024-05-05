@@ -3,13 +3,9 @@ package com.example.joyfulcampus
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.joyfulcampus.databinding.ActivityMainBinding
@@ -29,13 +25,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
 
-        // Toolbar
-        val toolbarBodyTemplate = binding.appBarMain.toolbar
-        setSupportActionBar(toolbarBodyTemplate)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 홈 버튼 활성화
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_apps_24)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbarBodyTemplate.title = "편안한 캠퍼스"
 
 // NavigationView의 메뉴 텍스트 색상 설정
         binding.mainSidebar.itemTextColor = ContextCompat.getColorStateList(this, R.color.black)
@@ -69,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     // 챗봇 버튼 Click Event
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        menuInflater.inflate(R.menu.menu_home_toolbar, menu);
         return true
     }
 
