@@ -3,13 +3,9 @@ package com.example.joyfulcampus
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.joyfulcampus.databinding.ActivityMainBinding
@@ -62,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     // 챗봇 버튼 Click Event
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        menuInflater.inflate(R.menu.menu_home_toolbar, menu);
         return true
     }
 
