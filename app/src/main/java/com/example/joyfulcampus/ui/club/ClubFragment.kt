@@ -6,6 +6,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.ArticleModel
 import com.example.joyfulcampus.databinding.FragmentClubBinding
@@ -27,20 +28,26 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true) // 프래그먼트에서 옵션 메뉴를 처리하기 위해 설정
 
-        // firestore
-        val db = Firebase.firestore
-        db.collection("articles").document("xIkTdPh2aD7izK56Y9ad")
+        setupAddButton(view)
+
+        val articleAdapter = ClubArticleAdapter {
+
+        }
+
+        binding.clubRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = articleAdapter
+        }
+
+        Firebase.firestore.collection("articles")
             .get()
             .addOnSuccessListener {result ->
-                // firestore에서 가져온 데이터가 저장된 ArticleModel를 Datatype으로 삼아 하나의 article 생성
-                val article = result.toObject<ArticleModel>()
-                Log.e("homeFragment", article.toString())
-            }
-            .addOnFailureListener {
-                it.printStackTrace()
-            }
+                val list = result.map {
+                    it.toObject<ArticleModel>()
+                }
 
-        setupAddButton(view)
+                articleAdapter.submitList(list)
+            }
     }
 
     private fun setupAddButton(view: View) {
