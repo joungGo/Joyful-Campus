@@ -5,9 +5,12 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.ArticleModel
 import com.example.joyfulcampus.databinding.FragmentClubBinding
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
@@ -24,17 +27,31 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true) // 프래그먼트에서 옵션 메뉴를 처리하기 위해 설정
 
+        // firestore
         val db = Firebase.firestore
         db.collection("articles").document("xIkTdPh2aD7izK56Y9ad")
             .get()
             .addOnSuccessListener {result ->
-                // 8-1. firestore에서 가져온 데이터가 저장된 ArticleModel를 Datatype으로 삼아 하나의 article 생성
+                // firestore에서 가져온 데이터가 저장된 ArticleModel를 Datatype으로 삼아 하나의 article 생성
                 val article = result.toObject<ArticleModel>()
                 Log.e("homeFragment", article.toString())
             }
             .addOnFailureListener {
                 it.printStackTrace()
             }
+
+        setupAddButton(view)
+    }
+
+    private fun setupAddButton(view: View) {
+        binding.addButton.setOnClickListener {
+            if (Firebase.auth.currentUser != null) {
+                val action = ClubFragmentDirections.actionClubFragmentToAddArticleFragment()
+                findNavController().navigate(action)
+            } else {
+                Snackbar.make(view, "로그인 후 사용해주세요.", Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

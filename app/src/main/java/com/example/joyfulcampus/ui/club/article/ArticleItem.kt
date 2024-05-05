@@ -1,4 +1,4 @@
-package com.example.joyfulcampus.ui.club
+package com.example.joyfulcampus.ui.club.article
 
 data class ArticleItem (
     val articleId: String,
