@@ -31,7 +31,10 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         setupAddButton(view)
 
         val articleAdapter = ClubArticleAdapter {
-
+            it.articleId
+            findNavController().navigate(ClubFragmentDirections.actionClubFragmentToClubArticleFragment(
+                articleId = it.articleId.orEmpty()
+            ))
         }
 
         binding.clubRecyclerView.apply {
@@ -39,6 +42,7 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
             adapter = articleAdapter
         }
 
+        // 여기 선언하고 ClubArticleFragment로 넘어감
         Firebase.firestore.collection("articles")
             .get()
             .addOnSuccessListener {result ->
