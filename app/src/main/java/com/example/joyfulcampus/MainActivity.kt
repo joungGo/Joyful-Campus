@@ -1,5 +1,6 @@
 package com.example.joyfulcampus
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.joyfulcampus.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +22,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        val currentUser = Firebase.auth.currentUser
+
+        if(currentUser == null){
+
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }
+
+
+
 
         // activity_main의 BottomNavigationView와 FragmentContainerView 연결 구현
         val navHostFragment =
