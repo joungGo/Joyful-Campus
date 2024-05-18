@@ -1,8 +1,10 @@
-package com.example.joyfulcampus
+package com.example.joyfulcampus.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.joyfulcampus.MainActivity
+import com.example.joyfulcampus.R
 import com.example.joyfulcampus.databinding.ActivityAuthBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
@@ -26,7 +28,7 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val currentUser = Firebase.auth.currentUser
+        var currentUser = Firebase.auth.currentUser
 
         binding.authloginoutbutton.setOnClickListener {
             if (currentUser == null) { //로그아웃
@@ -37,6 +39,7 @@ class AuthActivity : AppCompatActivity() {
             } else { //로그인
                 Firebase.auth.signOut()
                 initviewToSignOutState()
+                currentUser = null
             }
         }
 

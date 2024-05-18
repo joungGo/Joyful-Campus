@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".ui.auth.AuthActivity"/>
+        <activity android:name=".ui.auth.LoginActivity"/>
+        <activity android:name=".ui.auth.SignUpActivity"/>
     </application>
 
 </manifest>

@@ -57,5 +57,21 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment"
+        android:label="ChatDetailFragment"
+        tools:layout="@layout/fragment_chatdetail"
+        />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_userlist"
+        >
+        <action
+            android:id="@+id/action_userFragment_to_chatDetailFragment"
+            app:destination="@id/chatDetailFragment" />
+    </fragment>
 
 </navigation>
