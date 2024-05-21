@@ -33,7 +33,7 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChatdetailBinding.bind(view)
 
-        // arguments를 통해 데이터를 받아옵니다
+//      fragment 간 정보를 arguments를 통해 데이터를 받아옵니다
         chatRoomId = arguments?.getString(EXTRA_CHAT_ROOM_ID) ?: return
         otherUserId = arguments?.getString(EXTRA_OTHER_USER_ID) ?: return
         myUserId = Firebase.auth.currentUser?.uid ?: ""
@@ -50,6 +50,7 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
             chatDetailAdapter.otherUserItem = otherUserItem
         }
 
+//      채팅 내용
         Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatdetailItem = snapshot.getValue(ChatDetailItem::class.java)
@@ -74,7 +75,7 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
             adapter = chatDetailAdapter
         }
 
-
+//      전송 버튼
         binding.sendImage.setOnClickListener{
             val message = binding.messageEditText.text.toString()
 
@@ -91,8 +92,9 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
             Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
                 newChatItem.chatId = key
                 setValue(newChatItem)
-
             }
+
+//          업데이트
             val updates: MutableMap<String, Any> = hashMapOf(
                 "${Key. DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to message,
                 "${Key. DB_CHAT_ROOMS}/$otherUserId/$myUserId/lastMessage" to message,

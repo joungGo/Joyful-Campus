@@ -20,11 +20,13 @@ class SignUpActivity: AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//      회원가입 버튼
         binding.signupButton.setOnClickListener {
             val username = binding.signupnameEditText.text.toString()
             val email = binding.signupemailEditText.text.toString()
             val password = binding.signuppasswordEditText.text.toString()
 
+//          이름, email, password 확인
             if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Snackbar.make(binding.root, "빈칸이 존재합니다 제대로 입력해주세요.", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -36,6 +38,7 @@ class SignUpActivity: AppCompatActivity() {
 
                         val userId = Firebase.auth.currentUser?.uid
 
+//                      Firebase에 저장
                         if (userId != null) {
                             val user = mutableMapOf<String, Any>()
                             user["userId"] = userId

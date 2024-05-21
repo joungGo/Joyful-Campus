@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        // 앱 들어갔을 때 로그인 확인하고 로그인 안되어있으면 AuthActivity로 이동
         val currentUser = Firebase.auth.currentUser
 
         if(currentUser == null){

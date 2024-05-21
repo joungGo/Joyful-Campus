@@ -35,6 +35,7 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
             val myUserId = Firebase.auth.currentUser?.uid ?: ""
             val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId).child(otherUser.userId ?: "")
 
+//          데이터 가져오기
             chatRoomDB.get().addOnSuccessListener {
 
                 var chatRoomId = ""
@@ -44,6 +45,7 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                     chatRoomId = chatRoom?.chatRoomId ?: ""
 
                 } else {
+                    // 데이터없으니 틀 생성
                     chatRoomId = UUID.randomUUID().toString()
                     val newChatRoom = ChatRoomItem(
                         chatRoomId = chatRoomId,
@@ -54,8 +56,9 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                 }
 
 
-                val chatdetailFragment = ChatDetailFragment()
 
+                val chatdetailFragment = ChatDetailFragment()
+//              fragment 간 정보 및 fragment 이동
                 val bundle = Bundle()
                 bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, otherUser.userId)
                 bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomId)
@@ -70,8 +73,6 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                     }
 
 
- //               val action = UserFragmentDirections.actionUserFragmentToChatDetailFragment()
- //               findNavController().navigate(action)
             }
 
         }

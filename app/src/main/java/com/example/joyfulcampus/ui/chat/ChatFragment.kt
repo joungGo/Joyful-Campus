@@ -20,6 +20,7 @@ class ChatFragment: Fragment(R.layout.fragment_chat) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChatBinding.bind(view)
 
+        // Toolbar 설정
         val toolbarBodyTemplate = view.findViewById<Toolbar>(R.id.chatToolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbarBodyTemplate)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true) // 홈 버튼 활성화
@@ -30,11 +31,11 @@ class ChatFragment: Fragment(R.layout.fragment_chat) {
 
         binding.chatnavi.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.userList -> {
+                R.id.userList -> {  // 유저리스트
                     replaceFragment(userFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.chatroomList -> {
+                R.id.chatroomList -> {  // 채팅리스트
                     replaceFragment(chatFragment)
                     return@setOnItemSelectedListener true
                 }
@@ -48,7 +49,7 @@ class ChatFragment: Fragment(R.layout.fragment_chat) {
 
     }
 
-
+// frameLayout 과 연결
     private fun replaceFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .apply{

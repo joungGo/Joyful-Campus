@@ -30,6 +30,7 @@ class AuthActivity : AppCompatActivity() {
 
         var currentUser = Firebase.auth.currentUser
 
+//      로그아웃 버튼
         binding.authloginoutbutton.setOnClickListener {
             if (currentUser == null) { //로그아웃
                 initviewToSignOutState()
@@ -43,17 +44,19 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
+        // 시작 버튼
         binding.authstartbutton.setOnClickListener {
-            if (currentUser == null) {
+            if (currentUser == null) { // 로그인 상태가 아닐때
                 Snackbar.make(binding.root, "로그인 해주세요.", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
-            } else {
+            } else { // 로그인 상태일 때
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
+        // 회원가입 버튼
         binding.authsignupbutton.setOnClickListener {
             if (currentUser == null) {
                 val intent = Intent(this, SignUpActivity::class.java)
@@ -63,13 +66,13 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    //로그인 상태
+    //로그인 상태일 때 변경될 화면
     private fun initviewToSignInState() {
         binding.authloginoutbutton.text = getString(R.string.Logout)
         binding.authsignupbutton.isEnabled = false
     }
 
-    //로그아웃 상태
+    //로그아웃 상태일 때 변경될 화면
     private fun initviewToSignOutState() {
         binding.authloginoutbutton.text = getString(R.string.Login)
         binding.authsignupbutton.isEnabled = true

@@ -25,7 +25,7 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
         binding = FragmentChatlistBinding.bind(view)
 
         val chatListAdapter = ChatListAdapter{ chatRoomItem ->
-
+//          fragment 간 이동
             val bundle = Bundle()
             bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, chatRoomItem.otherUserId)
             bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomItem.chatRoomId)
@@ -45,7 +45,7 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
         }
 
 
-        val currentUserid = Firebase.auth.currentUser?.uid ?: ""
+        val currentUserid = Firebase.auth.currentUser?.uid ?: return
         val chatRoomsDB = Firebase.database.reference.child(Key.DB_CHAT_ROOMS).child(currentUserid)
 
         chatRoomsDB.addValueEventListener(object :ValueEventListener{
@@ -59,8 +59,6 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
             override fun onCancelled(error: DatabaseError) {
 
             }
-
-
         })
 
     }

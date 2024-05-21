@@ -1,5 +1,6 @@
 package com.example.joyfulcampus.data
 
+// realtimebase
 class Key {
     companion object {
         const val DB_URL = "https://joyful-campus-4018c-default-rtdb.firebaseio.com/"

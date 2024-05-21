@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     // Firebase
+    // bom 버전 올렸습니다.
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")

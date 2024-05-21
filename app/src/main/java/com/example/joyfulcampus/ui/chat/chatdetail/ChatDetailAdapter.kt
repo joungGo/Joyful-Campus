@@ -17,14 +17,16 @@ import com.google.firebase.database.database
 
 class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHolder>(differ) {
 
+
     var otherUserItem: UserItem? = null
 
     val currentUserId = Firebase.auth.currentUser?.uid ?: ""
-    val currentUserDB = Firebase.database.reference.child(Key.DB_USERS).child(currentUserId)
 
 
     inner class ViewHolder(private val binding: ItemChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        //      채팅방 서로간의 채팅 내용 위치 변경
         fun bind(item: ChatDetailItem) {
             if (item.userId == otherUserItem?.userId) {
                 binding.profileImageView.isVisible = true

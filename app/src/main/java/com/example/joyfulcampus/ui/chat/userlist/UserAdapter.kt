@@ -32,7 +32,6 @@ class UserAdapter(private val onClick: (UserItem) -> Unit): ListAdapter<UserItem
         holder.bind(currentList[position])
     }
 
-
     companion object {
         val differ = object : DiffUtil.ItemCallback<UserItem>() {
             override fun areItemsTheSame(oldItem: UserItem, newItem: UserItem): Boolean {
