@@ -1,5 +1,7 @@
 package com.example.joyfulcampus
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,7 +11,6 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.joyfulcampus.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,20 +36,20 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             // 클릭 이벤트 처리
             when (menuItem.itemId) {
-                R.id.menu1 -> {
-                    // TODO: 메뉴 아이템1에 대한 처리 작성
+                R.id.hompage -> {
+                    openUrl("https://www.dju.ac.kr/dju/main.do")
                     true
                 }
-                R.id.menu2 -> {
-                    // TODO: 메뉴 아이템2에 대한 처리 작성
+                R.id.portal -> {
+                    openUrl("https://portal.dju.ac.kr/")
                     true
                 }
-                R.id.menu3 -> {
-                    // TODO: 메뉴 아이템3에 대한 처리 작성
+                R.id.schedule -> {
+                    openUrl("https://www.dju.ac.kr/dju/sv/schdulView/schdulCalendarView.do?mi=1166")
                     true
                 }
-                R.id.menu4 -> {
-                    // TODO: 메뉴 아이템4에 대한 처리 작성
+                R.id.schedule_notice -> {
+                    openUrl("https://www.dju.ac.kr/dju/na/ntt/selectNttList.do?mi=1165&bbsId=1861")
                     true
                 }
                 else -> false
@@ -83,5 +84,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    // Function to open URL in browser
+    private fun openUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
 }

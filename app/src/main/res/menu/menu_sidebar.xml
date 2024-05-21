@@ -5,20 +5,20 @@
     <item android:title="Menu">
         <menu>
             <item
-                android:id="@+id/menu1"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/hompage"
+                android:icon="@drawable/sidebar_hompage_icon"
                 android:title="학교 홈페이지" />
             <item
-                android:id="@+id/menu2"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/portal"
+                android:icon="@drawable/sidebar_portal_icon"
                 android:title="포털" />
             <item
-                android:id="@+id/menu3"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/schedule"
+                android:icon="@drawable/sidebar_schedule_icon"
                 android:title="학사 일정" />
             <item
-                android:id="@+id/menu4"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/schedule_notice"
+                android:icon="@drawable/alarm_icon"
                 android:title="학사 공지" />
         </menu>
     </item>
@@ -26,12 +26,12 @@
     <item android:title="Settings">
         <menu>
             <item
-                android:id="@+id/setting1"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/account"
+                android:icon="@drawable/sidebar_account"
                 android:title="계정" />
             <item
-                android:id="@+id/setting2"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/security"
+                android:icon="@drawable/sidebar_security_icon"
                 android:title="보안" />
         </menu>
     </item>
@@ -39,12 +39,12 @@
     <item android:title="Notice">
         <menu>
             <item
-                android:id="@+id/notice1"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/alarm1"
+                android:icon="@drawable/sidebar_notice_icon"
                 android:title="알림1" />
             <item
-                android:id="@+id/notice2"
-                android:icon="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/alarm2"
+                android:icon="@drawable/sidebar_notice_icon"
                 android:title="알림2" />
         </menu>
     </item>

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.joyfulcampus.data.ArticleModel
 import com.example.joyfulcampus.databinding.ItemClubBinding
-import com.example.joyfulcampus.ui.club.article.ArticleItem
 
 class ClubArticleAdapter(val onItemClicked: (ArticleModel) -> Unit): ListAdapter<ArticleModel, ClubArticleAdapter.ViewHolder> (diffUtil) {
     inner class ViewHolder(private val binding: ItemClubBinding) :

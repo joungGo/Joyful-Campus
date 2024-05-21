@@ -92,7 +92,7 @@ class AddArticleFragment : Fragment(R.layout.fragment_add_club) {
                     })
 
             } else {
-                Snackbar.make(view, "이미지가 선탤되지 않았습니다.", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view, "이미지가 선택되지 않았습니다.", Snackbar.LENGTH_SHORT).show()
                 hideProgress()
             }
         }

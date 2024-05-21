@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/alarm"
-        android:icon="@drawable/baseline_announcement_24"
+        android:icon="@drawable/alarm_icon"
         android:title="알림"
         app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/find"
-        android:icon="@drawable/ic_baseline_search_24"
+        android:icon="@drawable/find_iconsvg"
         android:title="검색"
         app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/bookmark"
-        android:icon="@drawable/ic_baseline_bookmark_border_24"
+        android:icon="@drawable/bookmark_icon"
         android:title="북마크"
         app:showAsAction="always|withText" />
 

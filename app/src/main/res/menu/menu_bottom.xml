@@ -7,22 +7,22 @@
 
     <item
         android:id="@+id/chatFragment"
-        android:icon="@drawable/baseline_announcement_24"
+        android:icon="@drawable/chat_icon"
         android:title="채팅"/>
 
     <item
         android:id="@+id/clubFragment"
-        android:icon="@drawable/baseline_announcement_24"
+        android:icon="@drawable/club_icon"
         android:title="동아리"/>
 
     <item
         android:id="@+id/foodFragment"
-        android:icon="@drawable/baseline_business_24"
+        android:icon="@drawable/food_icon"
         android:title="음식"/>
 
     <item
         android:id="@+id/myPageFragment"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/mypage_icon"
         android:title="마이페이지"/>
 
 </menu>

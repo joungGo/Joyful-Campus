@@ -15,7 +15,8 @@
             android:id="@+id/homeToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/purple_200"
+            android:background="#FFFFFF"
+            android:elevation="20dp"
             app:popupTheme="@style/Theme.JoyfulCampus.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
