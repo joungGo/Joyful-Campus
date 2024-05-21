@@ -14,4 +14,5 @@ class ClubFormMain: Fragment(R.layout.fragment_clubform_main) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentClubformMainBinding.bind(view)
     }
+
 }

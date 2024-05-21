@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/topSector"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="159dp"
+        android:layout_height="135dp"
+        android:background="@drawable/rounded_corners"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="W,10:7"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,39 +28,38 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomSector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/topSector"
+        android:layout_width="159dp"
+        android:layout_height="55dp"
+        android:background="@drawable/rounded_corners"
         app:layout_constraintStart_toStartOf="@id/topSector"
-        android:background="@color/white">
+        app:layout_constraintTop_toBottomOf="@id/topSector">
 
         <TextView
             android:id="@+id/mainText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="13.54dp"
             android:text="코딩 동아리"
-            app:layout_constraintTop_toTopOf="@id/bottomSector"
-            app:layout_constraintStart_toStartOf="@id/bottomSector"/>
+            app:layout_constraintStart_toStartOf="@id/bottomSector"
+            app:layout_constraintTop_toTopOf="@id/bottomSector" />
 
         <TextView
             android:id="@+id/subText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="부제목"
-            app:layout_constraintTop_toBottomOf="@id/mainText"
-            app:layout_constraintStart_toStartOf="@id/mainText"/>
+            app:layout_constraintStart_toStartOf="@id/mainText"
+            app:layout_constraintTop_toBottomOf="@id/mainText" />
 
         <ImageView
             android:id="@+id/bookmarkImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/ic_baseline_bookmark_border_24"
-            app:layout_constraintEnd_toEndOf="@id/bottomSector"
-            app:layout_constraintBottom_toBottomOf="@id/subText"/>
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bookmark_icon_club"
+            app:layout_constraintBottom_toBottomOf="@id/subText"
+            app:layout_constraintEnd_toEndOf="@id/bottomSector" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
