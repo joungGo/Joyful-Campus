@@ -6,11 +6,12 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,9 +47,11 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
 
         val articleAdapter = ClubArticleAdapter {
             it.articleId
-            findNavController().navigate(ClubFragmentDirections.actionClubFragmentToClubArticleFragment(
-                articleId = it.articleId.orEmpty()
-            ))
+            findNavController().navigate(
+                ClubFragmentDirections.actionClubFragmentToClubArticleFragment(
+                    articleId = it.articleId.orEmpty()
+                )
+            )
         }
 
         binding.clubRecyclerView.apply {
@@ -59,7 +62,7 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         // 여기 선언하고 ClubArticleFragment로 넘어감
         Firebase.firestore.collection("articles")
             .get()
-            .addOnSuccessListener {result ->
+            .addOnSuccessListener { result ->
                 val list = result.map {
                     it.toObject<ArticleModel>()
                 }
@@ -139,14 +142,17 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
                 // 알람 아이템 클릭 시 처리할 코드
                 return true
             }
+
             R.id.find -> {
                 // 찾기 아이템 클릭 시 처리할 코드
                 return true
             }
+
             R.id.bookmark -> {
                 // 북마크 아이템 클릭 시 처리할 코드
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
