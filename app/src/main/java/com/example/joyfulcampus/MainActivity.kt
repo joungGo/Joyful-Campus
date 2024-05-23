@@ -8,9 +8,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.joyfulcampus.databinding.ActivityMainBinding
+import com.example.joyfulcampus.ui.auth.AuthActivity
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,10 +25,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 앱 들어갔을 때 로그인 확인하고 로그인 안되어있으면 AuthActivity로 이동
+        val currentUser = Firebase.auth.currentUser
+
+        if(currentUser == null){
+
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }
+
+
+
+
         // activity_main의 BottomNavigationView와 FragmentContainerView 연결 구현
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+
 
 
 // NavigationView의 메뉴 텍스트 색상 설정
@@ -74,9 +91,11 @@ class MainActivity : AppCompatActivity() {
                 // 챗봇 아이템 클릭 시 동작 작성
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
     override fun onBackPressed() {
         // 뒤로가기 버튼을 눌렀을 때 사이드바가 열려 있다면 닫기
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
