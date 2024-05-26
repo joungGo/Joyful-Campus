@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_clubFragment_to_clubArticleFragment"
             app:destination="@id/clubArticleFragment" />
+        <action
+            android:id="@+id/action_clubFragment_to_bookMarkArticleFragment"
+            app:destination="@id/bookMarkArticleFragment" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
@@ -67,6 +70,14 @@
         <argument
             android:name="articleId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookMarkArticleFragment"
+        android:name="com.example.joyfulcampus.ui.bookmark.BookMarkArticleFragment"
+        android:label="북마크" >
+        <action
+            android:id="@+id/action_bookMarkArticleFragment_to_clubArticleFragment"
+            app:destination="@id/clubArticleFragment" />
     </fragment>
 
 </navigation>

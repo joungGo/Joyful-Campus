@@ -14,7 +14,7 @@
         app:showAsAction="always|withText" />
 
     <item
-        android:id="@+id/bookmark"
+        android:id="@+id/clubToolbarBookmark"
         android:icon="@drawable/bookmark_icon"
         android:title="북마크"
         app:showAsAction="always|withText" />
