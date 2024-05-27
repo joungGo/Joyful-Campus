@@ -7,6 +7,5 @@ data class ArticleModel (
     val clubNameText: String? = null,
     val description: String? = null,
     val imageUrl: String? = null,
-
-
+    val type: String? = null
 )

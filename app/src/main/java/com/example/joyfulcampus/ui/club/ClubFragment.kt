@@ -22,6 +22,8 @@ import com.example.joyfulcampus.data.ArticleModel
 import com.example.joyfulcampus.databinding.FragmentClubBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
@@ -31,6 +33,7 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
     private lateinit var categoryRecyclerView: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryList: List<Category>
+    private lateinit var articleAdapter: ClubArticleAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,37 +45,16 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         setHasOptionsMenu(true) // 프래그먼트에서 옵션 메뉴를 처리하기 위해 설정
 
         setupToolbarTitle()
-
         setupAddButton(view)
+        //setupBookmarkButton()
+        setUpRecyclerView()
+        setupCategoryRecyclerView()
 
-        val articleAdapter = ClubArticleAdapter {
-            it.articleId
-            findNavController().navigate(
-                ClubFragmentDirections.actionClubFragmentToClubArticleFragment(
-                    articleId = it.articleId.orEmpty()
-                )
-            )
-        }
-
-        binding.clubRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            adapter = articleAdapter
-        }
-
-        // 여기 선언하고 ClubArticleFragment로 넘어감
-        Firebase.firestore.collection("articles")
-            .get()
-            .addOnSuccessListener { result ->
-                val list = result.map {
-                    it.toObject<ArticleModel>()
-                }
-
-                articleAdapter.submitList(list)
-            }
+        fetchFirestoreData()
 
         //------------------------------------------------------------------------------
 
-        categoryRecyclerView = binding.categoryRecyclerView
+        /*categoryRecyclerView = binding.categoryRecyclerView
         categoryRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
@@ -89,8 +71,134 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         )
 
         categoryAdapter = CategoryAdapter(categoryList)
-        categoryRecyclerView.adapter = categoryAdapter
+        categoryRecyclerView.adapter = categoryAdapter*/
 
+    }
+
+    private fun setupCategoryRecyclerView() {
+        categoryRecyclerView = binding.categoryRecyclerView
+        categoryRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        // 카테고리 데이터 정의
+        categoryList = listOf(
+            Category(R.drawable.sport, "스포츠"),
+            Category(R.drawable.medical, "의료"),
+            Category(R.drawable.volunteer, "봉사"),
+            Category(R.drawable.coding, "코딩"),
+            Category(R.drawable.startup, "창업"),
+            Category(R.drawable.religion, "종교"),
+            Category(R.drawable.art, "예술"),
+            Category(R.drawable.things, "기타")
+        )
+
+        categoryAdapter = CategoryAdapter(categoryList) { category ->
+            filterArticlesByCategory(category)
+        }
+        categoryRecyclerView.adapter = categoryAdapter
+    }
+
+    private fun filterArticlesByCategory(category: String) {
+        val uid = Firebase.auth.currentUser?.uid ?: return
+        Firebase.firestore.collection("bookmark")
+            .document(uid)
+            .get()
+            .addOnSuccessListener {
+                val bookMarkList = it.get("articleIds") as? List<*>
+
+                Firebase.firestore.collection("articles")
+                    .whereEqualTo("type", category)
+                    .get()
+                    .addOnSuccessListener { result ->
+                        val list = result
+                            .map { snapshot -> snapshot.toObject<ArticleModel>() }
+                            .map { model ->
+                                ArticleItem(
+                                    articleId = model.articleId.orEmpty(),
+                                    clubNameText = model.clubNameText.orEmpty(),
+                                    description = model.description.orEmpty(),
+                                    imageUrl = model.imageUrl.orEmpty(),
+                                    isBookMark = bookMarkList?.contains(model.articleId.orEmpty())
+                                        ?: false
+                                )
+                            }
+
+                        articleAdapter.submitList(list)
+                    }
+            }
+    }
+
+    private fun fetchFirestoreData() {
+        val uid = Firebase.auth.currentUser?.uid ?: return
+        Firebase.firestore.collection("bookmark")
+            .document(uid)
+            .get()
+            .addOnSuccessListener {
+                val bookMarkList = it.get("articleIds") as? List<*>
+
+                Firebase.firestore.collection("articles")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        val list = result
+                            .map { snapshot -> snapshot.toObject<ArticleModel>() }
+                            .map { model ->
+                                ArticleItem(
+                                    articleId = model.articleId.orEmpty(),
+                                    clubNameText = model.clubNameText.orEmpty(),
+                                    description = model.description.orEmpty(),
+                                    imageUrl = model.imageUrl.orEmpty(),
+                                    isBookMark = bookMarkList?.contains(model.articleId.orEmpty())
+                                        ?: false
+                                )
+                            }
+
+                        articleAdapter.submitList(list)
+                    }
+            }
+    }
+
+    private fun setUpRecyclerView() {
+        articleAdapter = ClubArticleAdapter(
+            onItemClicked = {
+                findNavController()
+                    .navigate(
+                        ClubFragmentDirections.actionClubFragmentToClubArticleFragment(
+                            articleId = it.articleId.orEmpty()
+                        )
+                    )
+            },
+            onBookmarkClicked = { articleId, isBookmark ->
+                val uid = Firebase.auth.currentUser?.uid ?: return@ClubArticleAdapter
+                Firebase.firestore.collection("bookmark").document(uid)
+                    .update(
+                        "articleIds",
+                        if (isBookmark) {
+                            FieldValue.arrayUnion(articleId)
+                        } else {
+                            FieldValue.arrayRemove(articleId)
+                        }
+
+                    ).addOnFailureListener {
+                        if (it is FirebaseFirestoreException && it.code == FirebaseFirestoreException.Code.NOT_FOUND) {
+                            if (isBookmark) {
+                                Firebase.firestore.collection("bookmark").document(uid)
+                                    .set(
+                                        hashMapOf(
+                                            "articleIds" to listOf(articleId)
+                                        )
+                                    )
+                            }
+                        }
+                    }
+            }
+
+        )
+
+
+        binding.clubRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = articleAdapter
+        }
     }
 
     private fun setupAddButton(view: View) {
@@ -103,6 +211,10 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
             }
         }
     }
+
+    /*private fun setupBookmarkButton() {
+
+    }*/
 
     private fun setupToolbarTitle() {
         val toolbar = binding.clubToolbar
@@ -148,8 +260,9 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
                 return true
             }
 
-            R.id.bookmark -> {
+            R.id.clubToolbarBookmark -> {
                 // 북마크 아이템 클릭 시 처리할 코드
+                findNavController().navigate(ClubFragmentDirections.actionClubFragmentToBookMarkArticleFragment())
                 return true
             }
 

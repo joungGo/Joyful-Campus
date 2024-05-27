@@ -80,10 +80,12 @@ class AddArticleFragment : Fragment(R.layout.fragment_add_club) {
                     uri = photoUri,
                     successHandler = {photoUrl ->
                         // Firestore 데이터 업로드
+                        val selectedCategory = binding.categorySpinner.selectedItem.toString()
                         uploadArticle(
                             photoUrl,
                             binding.descriptionMainEditText.text.toString(),
-                            binding.descriptionSubEditText.text.toString()
+                            binding.descriptionSubEditText.text.toString(),
+                            selectedCategory
                         )
                     },
                     errorHandler = {
@@ -140,7 +142,7 @@ class AddArticleFragment : Fragment(R.layout.fragment_add_club) {
             }
     }
 
-    private fun uploadArticle(photoUrl: String, clubName: String ,description: String) {
+    private fun uploadArticle(photoUrl: String, clubName: String ,description: String, type: String) {
         val articleId = UUID.randomUUID().toString()
         val articleModel = ArticleModel(
             articleId = articleId,
@@ -148,6 +150,7 @@ class AddArticleFragment : Fragment(R.layout.fragment_add_club) {
             clubNameText = clubName,
             description = description,
             imageUrl = photoUrl,
+            type = type,
         )
 
         Firebase.firestore.collection("articles").document(articleId)
