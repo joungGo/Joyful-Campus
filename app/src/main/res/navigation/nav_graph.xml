@@ -72,7 +72,9 @@
         android:id="@+id/chatDetailFragment"
         android:name="com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment"
         android:label="ChatDetailFragment"
-        tools:layout="@layout/fragment_chatdetail" />
+        tools:layout="@layout/fragment_chatdetail" >
+
+    </fragment>
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"

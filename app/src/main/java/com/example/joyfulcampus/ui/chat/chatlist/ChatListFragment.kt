@@ -1,6 +1,5 @@
 package com.example.joyfulcampus.ui.chat.chatlist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -31,6 +30,8 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
             bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomItem.chatRoomId)
 
             val chatdetailFragment = ChatDetailFragment()
+
+            chatdetailFragment.arguments = bundle
 
             parentFragmentManager.beginTransaction()
                 .apply{

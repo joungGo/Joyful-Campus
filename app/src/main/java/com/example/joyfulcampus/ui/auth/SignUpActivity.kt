@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.database
+import com.google.firebase.messaging.messaging
 
 class SignUpActivity: AppCompatActivity() {
 
@@ -34,35 +35,33 @@ class SignUpActivity: AppCompatActivity() {
 
             Firebase.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
+                    val currentUser = Firebase.auth.currentUser
+                    if (task.isSuccessful && currentUser != null) {
 
-                        val userId = Firebase.auth.currentUser?.uid
+                        val userId = currentUser.uid
 
-//                      Firebase에 저장
-                        if (userId != null) {
+                        Firebase.messaging.token.addOnCompleteListener{
+                            val token = it.result
+
+//                          Firebase에 저장
                             val user = mutableMapOf<String, Any>()
                             user["userId"] = userId
                             user["username"] = username
                             user["useremail"] = email
-
+                            user["fcmToken"] = token
 
                             Firebase.database(DB_URL).reference.child(DB_USERS).child(userId).updateChildren(user)
-                        }
 
-                        Snackbar.make(binding.root, "회원가입에 성공했습니다. ", Snackbar.LENGTH_SHORT).show()
-                        val intent = Intent(this, AuthActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                            Snackbar.make(binding.root, "회원가입에 성공했습니다. ", Snackbar.LENGTH_SHORT).show()
 
-
+                            val intent = Intent(this, AuthActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } // 예외 처릭 가능 .addOnFailureListener()
                     } else {
                         Snackbar.make(binding.root, "회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
-
                     }
-
-
                 }
         }
     }
-
 }

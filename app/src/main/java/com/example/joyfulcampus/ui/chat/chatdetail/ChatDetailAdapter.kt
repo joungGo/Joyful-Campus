@@ -7,12 +7,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.joyfulcampus.data.Key
+import com.bumptech.glide.Glide
 import com.example.joyfulcampus.databinding.ItemChatBinding
 import com.example.joyfulcampus.ui.chat.userlist.UserItem
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.database.database
 
 
 class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHolder>(differ) {
@@ -20,25 +17,34 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
 
     var otherUserItem: UserItem? = null
 
-    val currentUserId = Firebase.auth.currentUser?.uid ?: ""
-
-
     inner class ViewHolder(private val binding: ItemChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         //      채팅방 서로간의 채팅 내용 위치 변경
         fun bind(item: ChatDetailItem) {
+
+
             if (item.userId == otherUserItem?.userId) {
+                binding.mymessageTextView.isVisible = false
                 binding.profileImageView.isVisible = true
                 binding.nicknameTextView.isVisible = true
                 binding.nicknameTextView.text = otherUserItem?.username
                 binding.messageTextView.text = item.message
                 binding.messageTextView.gravity = Gravity.START
+                binding.chatImage
+                Glide.with(binding.chatImage)
+                    .load(item.imageUrl)
+                    .into(binding.chatImage)
             } else {
+                binding.mymessageTextView.isVisible = true
                 binding.profileImageView.isVisible = false
                 binding.nicknameTextView.isVisible = false
-                binding.messageTextView.text = item.message
-                binding.messageTextView.gravity = Gravity.END
+                binding.messageTextView.isVisible = false
+                binding.mymessageTextView.text = item.message
+                binding.chatImage
+                Glide.with(binding.mychatImage)
+                    .load(item.imageUrl)
+                    .into(binding.mychatImage)
             }
         }
 
@@ -63,6 +69,7 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
     companion object {
         val differ = object : DiffUtil.ItemCallback<ChatDetailItem>() {
             override fun areItemsTheSame(
+
                 oldItem: ChatDetailItem,
                 newItem: ChatDetailItem
             ): Boolean {
