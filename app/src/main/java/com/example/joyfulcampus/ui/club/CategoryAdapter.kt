@@ -9,7 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.joyfulcampus.R
 
-class CategoryAdapter(private val categoryList: List<Category>) :
+class CategoryAdapter(
+    private val categoryList: List<Category>,
+    private val onCategoryClicked: (String) -> Unit // 클릭 리스너 추가
+) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,6 +45,11 @@ class CategoryAdapter(private val categoryList: List<Category>) :
             else -> android.R.color.black // 기본 색상
         }
         holder.categoryName.setTextColor(ContextCompat.getColor(holder.itemView.context, textColor))
+
+        // 카테고리 클릭 이벤트 설정
+        holder.itemView.setOnClickListener {
+            onCategoryClicked(category.name)
+        }
     }
 
 

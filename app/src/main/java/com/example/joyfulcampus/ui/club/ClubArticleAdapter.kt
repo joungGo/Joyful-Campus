@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.joyfulcampus.R
-import com.example.joyfulcampus.data.ArticleModel
 import com.example.joyfulcampus.databinding.ItemClubBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
