@@ -46,7 +46,7 @@ class CategoryAdapter(
         }
         holder.categoryName.setTextColor(ContextCompat.getColor(holder.itemView.context, textColor))
 
-        // 카테고리 클릭 이벤트 설정
+        // 카테고리 클릭 이벤트 설정.
         holder.itemView.setOnClickListener {
             onCategoryClicked(category.name)
         }
