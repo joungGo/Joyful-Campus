@@ -18,9 +18,21 @@
     <string name="signIn">로그인</string>
     <string name="signOut">로그아웃</string>
     <string name="upload">올리기</string>
+    <string name="편안한_Campus">편안한 Campus</string>
 
     <string name="Login">Login</string>
     <string name="Logout">Logout</string>
 
     <string name="default_notification_channel_id">default_notification_channel_id</string>
+
+    <string-array name="category_array">
+        <item>스포츠</item>
+        <item>의료</item>
+        <item>봉사</item>
+        <item>코딩</item>
+        <item>창업</item>
+        <item>종교</item>
+        <item>예술</item>
+        <item>기타</item>
+    </string-array>
 </resources>

@@ -46,6 +46,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
 
+    <!-- Spinner 추가 -->
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarUnderLineView"
+        android:entries="@array/category_array"/>
 
     <ScrollView
         android:layout_width="0dp"
@@ -53,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+        app:layout_constraintTop_toBottomOf="@id/categorySpinner">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -120,9 +130,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </ScrollView>
-
 
     <FrameLayout
         android:id="@+id/progressBarLayout"
@@ -146,6 +154,5 @@
             android:layout_gravity="center" />
 
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_clubFragment_to_clubArticleFragment"
             app:destination="@id/clubArticleFragment" />
+        <action
+            android:id="@+id/action_clubFragment_to_bookMarkArticleFragment"
+            app:destination="@id/bookMarkArticleFragment" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
@@ -58,7 +61,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/clubArticleFragment"
@@ -69,10 +72,18 @@
             app:argType="string" />
     </fragment>
     <fragment
+        android:id="@+id/bookMarkArticleFragment"
+        android:name="com.example.joyfulcampus.ui.bookmark.BookMarkArticleFragment"
+        android:label="북마크">
+        <action
+            android:id="@+id/action_bookMarkArticleFragment_to_clubArticleFragment"
+            app:destination="@id/clubArticleFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/chatDetailFragment"
         android:name="com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment"
         android:label="ChatDetailFragment"
-        tools:layout="@layout/fragment_chatdetail" >
+        tools:layout="@layout/fragment_chatdetail">
 
     </fragment>
     <fragment
@@ -80,10 +91,6 @@
         android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"
         android:label="UserFragment"
         tools:layout="@layout/fragment_userlist">
-        <action
-            android:id="@+id/action_userFragment_to_chatDetailFragment"
-            app:destination="@id/chatDetailFragment" />
+
     </fragment>
-
-
 </navigation>
