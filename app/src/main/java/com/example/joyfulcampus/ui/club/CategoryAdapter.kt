@@ -11,14 +11,13 @@ import com.example.joyfulcampus.R
 
 class CategoryAdapter(
     private val categoryList: List<Category>,
-    private val onCategoryClicked: (String) -> Unit
-) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-
-    private var selectedCategory: String? = null
+    private val onCategoryClicked: (String) -> Unit // 클릭 리스너 추가
+) :
+    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val categoryIcon: ImageView = itemView.findViewById(R.id.categoryIcon)
-        val categoryName: TextView = itemView.findViewById(R.id.categoryName)
+        val categoryIcon = itemView.findViewById<ImageView>(R.id.categoryIcon)
+        val categoryName = itemView.findViewById<TextView>(R.id.categoryName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -32,6 +31,7 @@ class CategoryAdapter(
         holder.categoryIcon.setImageResource(category.iconResourceId)
         holder.categoryName.text = category.name
 
+        // 카테고리 이름에 따라 다른 텍스트 색상 설정
         val textColor = when (category.name) {
             "스포츠" -> R.color.sports_color
             "의료" -> R.color.medical_color
@@ -41,23 +41,17 @@ class CategoryAdapter(
             "종교" -> R.color.religion_color
             "예술" -> R.color.art_color
             "기타" -> R.color.things_color
-            else -> android.R.color.black
+            // 필요한 경우 다른 카테고리에 대한 추가 케이스를 추가하세요.
+            else -> android.R.color.black // 기본 색상
         }
         holder.categoryName.setTextColor(ContextCompat.getColor(holder.itemView.context, textColor))
 
-        // 선택된 카테고리에 따라 투명도 조절
-        holder.itemView.alpha = if (selectedCategory == null || selectedCategory == category.name) 1.0f else 0.25f
-
+        // 카테고리 클릭 이벤트 설정.
         holder.itemView.setOnClickListener {
-            if (selectedCategory == category.name) {
-                selectedCategory = null
-            } else {
-                selectedCategory = category.name
-            }
-            notifyDataSetChanged() // RecyclerView 갱신
             onCategoryClicked(category.name)
         }
     }
+
 
     override fun getItemCount() = categoryList.size
 }
