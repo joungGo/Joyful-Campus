@@ -46,7 +46,7 @@ class CategoryAdapter(
         holder.categoryName.setTextColor(ContextCompat.getColor(holder.itemView.context, textColor))
 
         // 선택된 카테고리에 따라 투명도 조절
-        holder.itemView.alpha = if (selectedCategory == null || selectedCategory == category.name) 1.0f else 0.25gif
+        holder.itemView.alpha = if (selectedCategory == null || selectedCategory == category.name) 1.0f else 0.25f
 
         holder.itemView.setOnClickListener {
             if (selectedCategory == category.name) {
