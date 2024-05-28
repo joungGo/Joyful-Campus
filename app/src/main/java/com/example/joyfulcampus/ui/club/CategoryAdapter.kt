@@ -11,9 +11,10 @@ import com.example.joyfulcampus.R
 
 class CategoryAdapter(
     private val categoryList: List<Category>,
-    private val onCategoryClicked: (String) -> Unit // 클릭 리스너 추가
-) :
-    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+    private val onCategoryClicked: (String) -> Unit
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+
+    private var selectedCategory: String? = null
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val categoryIcon = itemView.findViewById<ImageView>(R.id.categoryIcon)
@@ -31,7 +32,6 @@ class CategoryAdapter(
         holder.categoryIcon.setImageResource(category.iconResourceId)
         holder.categoryName.text = category.name
 
-        // 카테고리 이름에 따라 다른 텍스트 색상 설정
         val textColor = when (category.name) {
             "스포츠" -> R.color.sports_color
             "의료" -> R.color.medical_color
@@ -41,17 +41,23 @@ class CategoryAdapter(
             "종교" -> R.color.religion_color
             "예술" -> R.color.art_color
             "기타" -> R.color.things_color
-            // 필요한 경우 다른 카테고리에 대한 추가 케이스를 추가하세요.
-            else -> android.R.color.black // 기본 색상
+            else -> android.R.color.black
         }
         holder.categoryName.setTextColor(ContextCompat.getColor(holder.itemView.context, textColor))
 
-        // 카테고리 클릭 이벤트 설정.
+        // 선택된 카테고리에 따라 투명도 조절
+        holder.itemView.alpha = if (selectedCategory == null || selectedCategory == category.name) 1.0f else 0.25gif
+
         holder.itemView.setOnClickListener {
+            if (selectedCategory == category.name) {
+                selectedCategory = null
+            } else {
+                selectedCategory = category.name
+            }
+            notifyDataSetChanged() // RecyclerView 갱신
             onCategoryClicked(category.name)
         }
     }
-
 
     override fun getItemCount() = categoryList.size
 }
