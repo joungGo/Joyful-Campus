@@ -34,6 +34,7 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryList: List<Category>
     private lateinit var articleAdapter: ClubArticleAdapter
+    private var selectedCategory: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,33 +47,10 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
 
         setupToolbarTitle()
         setupAddButton(view)
-        //setupBookmarkButton()
         setUpRecyclerView()
         setupCategoryRecyclerView()
 
         fetchFirestoreData()
-
-        //------------------------------------------------------------------------------
-
-        /*categoryRecyclerView = binding.categoryRecyclerView
-        categoryRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        // 카테고리 데이터 추가
-        categoryList = listOf(
-            Category(R.drawable.sport, "스포츠"),
-            Category(R.drawable.medical, "의료"),
-            Category(R.drawable.volunteer, "봉사"),
-            Category(R.drawable.coding, "코딩"),
-            Category(R.drawable.startup, "창업"),
-            Category(R.drawable.religion, "종교"),
-            Category(R.drawable.art, "예술"),
-            Category(R.drawable.things, "기타")
-        )
-
-        categoryAdapter = CategoryAdapter(categoryList)
-        categoryRecyclerView.adapter = categoryAdapter*/
-
     }
 
     private fun setupCategoryRecyclerView() {
@@ -93,7 +71,13 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         )
 
         categoryAdapter = CategoryAdapter(categoryList) { category ->
-            filterArticlesByCategory(category)
+            if (selectedCategory == category) {
+                selectedCategory = null
+                fetchFirestoreData() // 모든 게시물 표시
+            } else {
+                selectedCategory = category
+                filterArticlesByCategory(category) // 선택한 카테고리의 게시물만 표시
+            }
         }
         categoryRecyclerView.adapter = categoryAdapter
     }
@@ -194,7 +178,6 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
 
         )
 
-
         binding.clubRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = articleAdapter
@@ -211,10 +194,6 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
             }
         }
     }
-
-    /*private fun setupBookmarkButton() {
-
-    }*/
 
     private fun setupToolbarTitle() {
         val toolbar = binding.clubToolbar
