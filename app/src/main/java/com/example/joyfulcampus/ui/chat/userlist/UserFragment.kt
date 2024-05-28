@@ -1,16 +1,13 @@
 package com.example.joyfulcampus.ui.chat.userlist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key.Companion.DB_CHAT_ROOMS
 import com.example.joyfulcampus.data.Key.Companion.DB_USERS
 import com.example.joyfulcampus.databinding.FragmentUserlistBinding
-import com.example.joyfulcampus.ui.chat.ChatFragment
 import com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment
 import com.example.joyfulcampus.ui.chat.chatlist.ChatRoomItem
 import com.google.firebase.Firebase
@@ -71,10 +68,7 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                         addToBackStack(null)
                         commit()
                     }
-
-
             }
-
         }
         binding.userListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -105,6 +99,4 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
             }
         })
     }
-
-
 }

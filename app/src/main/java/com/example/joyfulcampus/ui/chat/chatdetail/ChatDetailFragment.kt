@@ -1,10 +1,18 @@
 package com.example.joyfulcampus.ui.chat.chatdetail
 
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key
 import com.example.joyfulcampus.databinding.FragmentChatdetailBinding
@@ -16,39 +24,74 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.database
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
+import com.google.firebase.storage.storage
+import java.util.UUID
 
 
-class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
+class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
 
     private lateinit var binding: FragmentChatdetailBinding
+    private lateinit var ChatDetailAdapter: ChatDetailAdapter
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private var chatRoomId: String = ""
     private var otherUserId: String = ""
     private var myUserId: String = ""
     private var myUserName: String = ""
+    private var selectedUrl: Uri? = null
 
     private val chatItemList = mutableListOf<ChatDetailItem>()
 
-    override fun onViewCreated(view: View,  savedInstanceState: Bundle?){
+
+    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        // Callback is invoked after the user selects a media item or closes the
+        // photo picker.
+        if (uri != null) {
+            selectedUrl = uri
+
+            if (selectedUrl != null) {
+                val photoUri = selectedUrl ?: return@registerForActivityResult
+                uploadImage(
+                    uri = photoUri,
+                    successHandler = {
+                                     uploadImagechat(it)
+                    },
+                    errorHandler = {
+                    })
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChatdetailBinding.bind(view)
+
+        setupPhotoImage(view)
+
+        ChatDetailAdapter = ChatDetailAdapter()
 
 //      fragment 간 정보를 arguments를 통해 데이터를 받아옵니다
         chatRoomId = arguments?.getString(EXTRA_CHAT_ROOM_ID) ?: return
         otherUserId = arguments?.getString(EXTRA_OTHER_USER_ID) ?: return
         myUserId = Firebase.auth.currentUser?.uid ?: ""
 
-        val chatDetailAdapter = ChatDetailAdapter()
+
+        linearLayoutManager = LinearLayoutManager(requireContext())
+
 
         Firebase.database.reference.child(Key.DB_USERS).child(myUserId).get().addOnSuccessListener {
             val myUserItem = it.getValue(UserItem::class.java)
             myUserName = myUserItem?.username ?: ""
         }
 
-        Firebase.database.reference.child(Key.DB_USERS).child(otherUserId).get().addOnSuccessListener {
-            val otherUserItem = it.getValue(UserItem::class.java)
-            chatDetailAdapter.otherUserItem = otherUserItem
-        }
+        Firebase.database.reference.child(Key.DB_USERS).child(otherUserId).get()
+            .addOnSuccessListener {
+                val otherUserItem = it.getValue(UserItem::class.java)
+                ChatDetailAdapter.otherUserItem = otherUserItem
+
+            }
 
 //      채팅 내용
         Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object : ChildEventListener {
@@ -57,7 +100,7 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
                 chatdetailItem ?: return
 
                 chatItemList.add(chatdetailItem)
-                chatDetailAdapter.submitList(chatItemList.toMutableList())
+                ChatDetailAdapter.submitList(chatItemList.toMutableList())
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
@@ -71,9 +114,32 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
         })
 
         binding.chatdetailRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = chatDetailAdapter
+            layoutManager = linearLayoutManager
+            adapter = ChatDetailAdapter
         }
+
+        Firebase.firestore.collection("chat")
+            .get()
+            .addOnSuccessListener { result ->
+                val list  = result.map {
+                    it.toObject<ChatDetailItem>()
+                }
+
+                ChatDetailAdapter.submitList(list)
+            }
+
+
+        ChatDetailAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+
+                linearLayoutManager.smoothScrollToPosition(
+                    binding.chatdetailRecyclerView,
+                    null,
+                    ChatDetailAdapter.itemCount
+                )
+            }
+        })
 
 //      전송 버튼
         binding.sendImage.setOnClickListener{
@@ -96,11 +162,11 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
 
 //          업데이트
             val updates: MutableMap<String, Any> = hashMapOf(
-                "${Key. DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to message,
-                "${Key. DB_CHAT_ROOMS}/$otherUserId/$myUserId/lastMessage" to message,
-                "${Key. DB_CHAT_ROOMS}/$otherUserId/$myUserId/chatRoomId" to chatRoomId,
-                "${Key. DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserId" to myUserId,
-                "${Key. DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserName" to myUserName,
+                "${Key.DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to message,
+                "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/lastMessage" to message,
+                "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/chatRoomId" to chatRoomId,
+                "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserId" to myUserId,
+                "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserName" to myUserName,
             )
 
             Firebase.database.reference.updateChildren(updates)
@@ -109,8 +175,90 @@ class ChatDetailFragment: Fragment(R.layout.fragment_chatdetail) {
         }
     }
 
+    private fun setupPhotoImage(view : View){
+        binding.photoImage.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+    private fun uploadImage(
+        uri: Uri,
+        successHandler: (String) -> Unit,
+        errorHandler: (Throwable?) -> Unit,
+        ){
+        val fileName = "${UUID.randomUUID()}.png"
+        Firebase.storage.reference.child("chat/photo").child(fileName)
+            .putFile(uri)
+            .addOnCompleteListener { task ->
+                if ( task.isSuccessful ){
+                    Firebase.storage.reference.child("chat/photo/${fileName}")
+                        .downloadUrl
+                        .addOnSuccessListener {
+                            successHandler(it.toString())
+                        } .addOnFailureListener {
+                            errorHandler(it)
+                        }
+                } else {
+                    errorHandler(task.exception)
+                }
+            }
+
+
+
+        val newChatItem = ChatDetailItem(
+            imageUrl = uri.toString(),
+            userId = myUserId
+        )
+
+        val lastimage = "사진"
+
+        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
+            newChatItem.chatId = key
+            setValue(newChatItem)
+        }
+
+//          업데이트
+        val updates: MutableMap<String, Any> = hashMapOf(
+            "${Key.DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to lastimage,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/lastMessage" to lastimage,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/chatRoomId" to chatRoomId,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserId" to myUserId,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserName" to myUserName,
+        )
+
+        Firebase.database.reference.updateChildren(updates)
+    }
+
+    private fun uploadImagechat(photoUri: String){
+        val articleId = UUID.randomUUID().toString()
+        val ChatDetailItem = ChatDetailItem(
+            articleId = articleId,
+            createdAt = System.currentTimeMillis(),
+            imageUrl = photoUri,
+            userId = myUserId
+        )
+
+        Firebase.firestore.collection("chat").document(articleId)
+            .set(ChatDetailItem)
+            .addOnSuccessListener {
+
+            }.addOnFailureListener{
+                view?.let {view ->
+                Snackbar.make(view, "글 작성에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+    }
+
     companion object {
         const val EXTRA_CHAT_ROOM_ID = "CHAT_ROOM_ID"
         const val EXTRA_OTHER_USER_ID = "OTHER_USER_ID"
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        childFragmentManager.beginTransaction()
+            .apply{
+                replace(R.id.chatDetailFragment, fragment)
+                commit()
+            }
     }
 }

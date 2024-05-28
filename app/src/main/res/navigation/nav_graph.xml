@@ -14,7 +14,7 @@
         android:id="@+id/clubFragment"
         android:name="com.example.joyfulcampus.ui.club.ClubFragment"
         android:label="ClubFragment"
-        tools:layout="@layout/fragment_club" >
+        tools:layout="@layout/fragment_club">
         <action
             android:id="@+id/action_clubFragment_to_addArticleFragment"
             app:destination="@id/addArticleFragment"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/addArticleFragment"
         android:name="com.example.joyfulcampus.ui.club.article.AddArticleFragment"
-        android:label="AddArticleFragment" >
+        android:label="AddArticleFragment">
         <action
             android:id="@+id/action_addArticleFragment_to_clubFragment"
             app:destination="@id/clubFragment"
@@ -61,12 +61,12 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/clubArticleFragment"
         android:name="com.example.joyfulcampus.ui.club.article.ClubArticleFragment"
-        android:label="동아리 상세보기" >
+        android:label="동아리 상세보기">
         <argument
             android:name="articleId"
             app:argType="string" />
@@ -74,10 +74,23 @@
     <fragment
         android:id="@+id/bookMarkArticleFragment"
         android:name="com.example.joyfulcampus.ui.bookmark.BookMarkArticleFragment"
-        android:label="북마크" >
+        android:label="북마크">
         <action
             android:id="@+id/action_bookMarkArticleFragment_to_clubArticleFragment"
             app:destination="@id/clubArticleFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment"
+        android:label="ChatDetailFragment"
+        tools:layout="@layout/fragment_chatdetail">
 
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_userlist">
+
+    </fragment>
 </navigation>

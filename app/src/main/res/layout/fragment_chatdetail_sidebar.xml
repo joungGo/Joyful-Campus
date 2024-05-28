@@ -56,11 +56,8 @@
 
 
             <EditText
-                android:background="@drawable/sendbox"
+                android:background="@color/gray_cc"
                 android:id="@+id/messageEditText"
-                android:paddingStart="7dp"
-                android:paddingEnd="7dp"
-                android:hint="메시지를 입력하세요."
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"/>
@@ -81,7 +78,6 @@
                 />
 
             <ImageView
-                android:id="@+id/photoImage"
                 android:layout_marginTop="2.5dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -93,6 +89,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/chatsidebarbackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#9A000000"
+        />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/chatdetailsidebar"
+        android:layout_width="276dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#CCE6FF"
+        app:itemTextColor="@color/black"
+        app:menu="@menu/menu_chat_sidebar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

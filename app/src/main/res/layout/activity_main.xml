@@ -9,6 +9,7 @@
     android:background="#F5F7FB"
     tools:openDrawer="start">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -58,9 +59,10 @@
         app:itemTextColor="@color/black"
         android:background="@android:color/white"
         app:menu="@menu/menu_sidebar">
-
-
     </com.google.android.material.navigation.NavigationView>
+
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
