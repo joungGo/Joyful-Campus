@@ -28,6 +28,7 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
                 binding.mymessageTextView.isVisible = false
                 binding.profileImageView.isVisible = true
                 binding.nicknameTextView.isVisible = true
+                binding.messageTextView.isVisible = true
                 binding.nicknameTextView.text = otherUserItem?.username
                 binding.messageTextView.text = item.message
                 binding.messageTextView.gravity = Gravity.START
@@ -63,6 +64,7 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(currentList[position])
+
     }
 
 

@@ -57,7 +57,6 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                     uri = photoUri,
                     successHandler = {
                                      uploadImagechat(it)
-
                     },
                     errorHandler = {
                     })
@@ -116,7 +115,6 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
 
         binding.chatdetailRecyclerView.apply {
             layoutManager = linearLayoutManager
-//            layoutManager = GridLayoutManager(context, 2)
             adapter = ChatDetailAdapter
         }
 
@@ -204,6 +202,31 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                     errorHandler(task.exception)
                 }
             }
+
+
+
+        val newChatItem = ChatDetailItem(
+            imageUrl = uri.toString(),
+            userId = myUserId
+        )
+
+        val lastimage = "사진"
+
+        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
+            newChatItem.chatId = key
+            setValue(newChatItem)
+        }
+
+//          업데이트
+        val updates: MutableMap<String, Any> = hashMapOf(
+            "${Key.DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to lastimage,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/lastMessage" to lastimage,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/chatRoomId" to chatRoomId,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserId" to myUserId,
+            "${Key.DB_CHAT_ROOMS}/$otherUserId/$myUserId/otherUserName" to myUserName,
+        )
+
+        Firebase.database.reference.updateChildren(updates)
     }
 
     private fun uploadImagechat(photoUri: String){
