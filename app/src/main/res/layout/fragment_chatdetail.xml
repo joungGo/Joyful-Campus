@@ -5,28 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/chatdetailToolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="편안한 Campus"
-            app:menu="@menu/menu_chatdetail_toolbar"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="28dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:backgroundTint="@color/black"
+                android:layout_marginStart="16dp"
+                />
+
+            <TextView
+                android:id="@+id/chatdetailtoolbartitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상대방이름"
+                android:textSize="22dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="60dp"
+                />
+
+            <ImageButton
+                android:id="@+id/chatdetailsidebarbutton"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/list"
+                android:background="@color/white"
+                android:layout_marginEnd="10dp"
+                />
+
+
+        </RelativeLayout>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginTop="64dp"
+        >
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -66,7 +93,7 @@
                 android:layout_height="match_parent"/>
 
             <ImageView
-                android:id="@+id/sendImage"
+                android:id="@+id/sendbutton"
                 android:layout_marginTop="2dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -93,6 +120,177 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--    <FrameLayout-->
+<!--        android:id="@+id/chatsidebarbackground"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#9A000000"-->
+<!--        >-->
+
+<!--        <com.google.android.material.navigation.NavigationView-->
+<!--            android:id="@+id/chatdetailsidebar"-->
+<!--            android:layout_width="276dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:background="#CCE6FF"-->
+<!--            app:itemTextColor="@color/black"-->
+<!--            >-->
+
+<!--            <FrameLayout-->
+<!--                android:id="@+id/sidebar_myuser"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="80dp">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/sidebar_myuser_image"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginStart="30dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/sidebar_myuser_name"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_marginStart="85dp"-->
+<!--                    android:layout_marginTop="25dp"-->
+<!--                    android:text="내이름"-->
+<!--                    android:textSize="20dp"-->
+<!--                    />-->
+<!--            </FrameLayout>-->
+
+<!--            <FrameLayout-->
+<!--                android:id="@+id/sidebar_otheruser"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="130dp"-->
+<!--                >-->
+<!--                <ImageView-->
+<!--                    android:id="@+id/sidebar_otheruser_image"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_marginStart="60dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/sidebar_otheruser_name"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:layout_marginStart="110dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:text="상대방이름"-->
+<!--                    android:textSize="15dp"-->
+<!--                    />-->
+<!--            </FrameLayout>-->
+
+<!--            <FrameLayout-->
+<!--                android:id="@+id/sidebar_menu"-->
+<!--                android:layout_marginTop="220dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/sidebar_menu_title"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="30dp"-->
+<!--                    android:text="menu"-->
+<!--                    />-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/sidebar_menu_document"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    >-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/sidebar_menu_document_image"-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:src="@drawable/chatdocuments"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginStart="50dp"-->
+<!--                        />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/sidebar_menu_document_title"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginStart="95dp"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:text="문서"-->
+<!--                        android:textSize="15dp"-->
+<!--                        />-->
+<!--                </FrameLayout>-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/sidebar_menu_alarm"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginTop="90dp"-->
+<!--                    >-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/sidebar_menu_alarm_image"-->
+<!--                        android:layout_width="32dp"-->
+<!--                        android:layout_height="32dp"-->
+<!--                        android:src="@drawable/alarm_image"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginStart="48dp"-->
+<!--                        />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/sidebar_menu_alarm_title"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginStart="95dp"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:text="알림"-->
+<!--                        android:textSize="15dp"-->
+<!--                        />-->
+<!--                </FrameLayout>-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/sidebar_menu_calender"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginTop="150dp"-->
+<!--                    >-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/sidebar_menu_calender_image"-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:src="@drawable/baseline_calendar_month_24"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginStart="50dp"-->
+<!--                        />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/sidebar_menu_calender_title"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginStart="95dp"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:text="캘린더"-->
+<!--                        android:textSize="15dp"-->
+<!--                        />-->
+<!--                </FrameLayout>-->
+
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/sidebar_exit_button"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:layout_marginStart="15dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:src="@drawable/exit_image"-->
+<!--                    />-->
+
+
+<!--            </FrameLayout>-->
+
+
+<!--        </com.google.android.material.navigation.NavigationView>-->
+<!--    </FrameLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

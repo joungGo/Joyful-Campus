@@ -121,11 +121,10 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         Firebase.firestore.collection("chat")
             .get()
             .addOnSuccessListener { result ->
-                val list  = result.map {
+                result.map {
                     it.toObject<ChatDetailItem>()
                 }
 
-                ChatDetailAdapter.submitList(list)
             }
 
 
@@ -142,7 +141,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         })
 
 //      전송 버튼
-        binding.sendImage.setOnClickListener{
+        binding.sendbutton.setOnClickListener{
             val message = binding.messageEditText.text.toString()
 
             if (message.isEmpty()){
@@ -243,9 +242,6 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
             .addOnSuccessListener {
 
             }.addOnFailureListener{
-                view?.let {view ->
-                Snackbar.make(view, "글 작성에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
-                }
             }
     }
 

@@ -66,6 +66,12 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Close the app when the back button is pressed
+        finishAffinity()
+    }
+
     //로그인 상태일 때 변경될 화면
     private fun initviewToSignInState() {
         binding.authloginoutbutton.text = getString(R.string.Logout)

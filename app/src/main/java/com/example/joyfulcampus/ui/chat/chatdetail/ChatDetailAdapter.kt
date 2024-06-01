@@ -25,27 +25,50 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
 
 
             if (item.userId == otherUserItem?.userId) {
-                binding.mymessageTextView.isVisible = false
-                binding.profileImageView.isVisible = true
-                binding.nicknameTextView.isVisible = true
-                binding.messageTextView.isVisible = true
-                binding.nicknameTextView.text = otherUserItem?.username
-                binding.messageTextView.text = item.message
-                binding.messageTextView.gravity = Gravity.START
-                binding.chatImage
-                Glide.with(binding.chatImage)
-                    .load(item.imageUrl)
-                    .into(binding.chatImage)
+                if (item.imageUrl == null){
+                    binding.chatImage.isVisible = false
+                    binding.mychatImage.isVisible = false
+                    binding.mymessageTextView.isVisible = false
+                    binding.profileImageView.isVisible = true
+                    binding.nicknameTextView.isVisible = true
+                    binding.messageTextView.isVisible = true
+                    binding.nicknameTextView.text = otherUserItem?.username
+                    binding.messageTextView.text = item.message
+                    binding.messageTextView.gravity = Gravity.START
+                } else {
+                    binding.chatImage.isVisible = true
+                    binding.mychatImage.isVisible = false
+                    binding.mymessageTextView.isVisible = false
+                    binding.profileImageView.isVisible = true
+                    binding.nicknameTextView.isVisible = true
+                    binding.messageTextView.isVisible = false
+                    binding.nicknameTextView.text = otherUserItem?.username
+                    binding.chatImage
+                    Glide.with(binding.chatImage)
+                        .load(item.imageUrl)
+                        .into(binding.chatImage)
+                }
             } else {
-                binding.mymessageTextView.isVisible = true
-                binding.profileImageView.isVisible = false
-                binding.nicknameTextView.isVisible = false
-                binding.messageTextView.isVisible = false
-                binding.mymessageTextView.text = item.message
-                binding.chatImage
-                Glide.with(binding.mychatImage)
-                    .load(item.imageUrl)
-                    .into(binding.mychatImage)
+                if (item.imageUrl == null){
+                    binding.chatImage.isVisible = false
+                    binding.mychatImage.isVisible = false
+                    binding.mymessageTextView.isVisible = true
+                    binding.profileImageView.isVisible = false
+                    binding.nicknameTextView.isVisible = false
+                    binding.messageTextView.isVisible = false
+                    binding.mymessageTextView.text = item.message
+                } else {
+                    binding.chatImage.isVisible = false
+                    binding.mychatImage.isVisible = true
+                    binding.mymessageTextView.isVisible = false
+                    binding.profileImageView.isVisible = false
+                    binding.nicknameTextView.isVisible = false
+                    binding.messageTextView.isVisible = false
+                    binding.mychatImage
+                    Glide.with(binding.mychatImage)
+                        .load(item.imageUrl)
+                        .into(binding.mychatImage)
+                }
             }
         }
 

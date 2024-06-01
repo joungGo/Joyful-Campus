@@ -45,5 +45,11 @@ class LoginActivity: AppCompatActivity() {
         }
 
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Close the app when the back button is pressed
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
