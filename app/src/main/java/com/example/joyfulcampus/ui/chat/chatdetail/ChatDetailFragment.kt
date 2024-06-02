@@ -1,21 +1,21 @@
 package com.example.joyfulcampus.ui.chat.chatdetail
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key
 import com.example.joyfulcampus.databinding.FragmentChatdetailBinding
+import com.example.joyfulcampus.ui.chat.ChatFragment
 import com.example.joyfulcampus.ui.chat.userlist.UserItem
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
@@ -24,7 +24,6 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.database
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.storage
@@ -57,7 +56,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 uploadImage(
                     uri = photoUri,
                     successHandler = {
-                                     uploadImagechat(it)
+                        uploadImagechat(it)
                     },
                     errorHandler = {
                     })
@@ -71,6 +70,8 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
 
         setupPhotoImage(view)
 
+        (requireActivity() as AppCompatActivity).setSupportActionBar(null)
+
         ChatDetailAdapter = ChatDetailAdapter()
 
 //      fragment 간 정보를 arguments를 통해 데이터를 받아옵니다
@@ -78,6 +79,12 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         otherUserId = arguments?.getString(EXTRA_OTHER_USER_ID) ?: return
         myUserId = Firebase.auth.currentUser?.uid ?: ""
 
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/pdf"  // or another appropriate MIME type
+            putExtra(Intent.EXTRA_TITLE, "newfile.pdf")
+        }
+//      startActivityForResult(intent, CREATE_FILE_REQUEST_CODE)
 
         linearLayoutManager = LinearLayoutManager(requireContext())
 
@@ -92,6 +99,9 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 val otherUserItem = it.getValue(UserItem::class.java)
                 ChatDetailAdapter.otherUserItem = otherUserItem
 
+                if (otherUserItem != null) {
+                    binding.chatdetailtoolbartitle.text = otherUserItem.username
+                }
             }
 
 //      채팅 내용
@@ -141,6 +151,15 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
             }
         })
 
+//      카메라
+        binding.cameraImage.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
+
+        binding.clipImage.setOnClickListener {
+
+        }
+
 //      전송 버튼
         binding.sendbutton.setOnClickListener{
             val message = binding.messageEditText.text.toString()
@@ -172,6 +191,34 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
             Firebase.database.reference.updateChildren(updates)
 
             binding.messageEditText.text.clear()
+        }
+
+        binding.backButton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .apply{
+                    replace(R.id.frameLayout, ChatFragment())
+                    commit()
+                }
+        }
+
+        binding.backbuttonframeyout.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .apply{
+                    replace(R.id.frameLayout, ChatFragment())
+                    commit()
+                }
+        }
+
+
+    }
+
+    val REQUEST_IMAGE_CAPTURE = 1
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
         }
     }
 

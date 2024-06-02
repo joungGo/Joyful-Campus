@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -12,42 +15,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/backButton"
-                android:layout_width="28dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:backgroundTint="@color/black"
-                android:layout_marginStart="16dp"
+            <FrameLayout
+                android:id="@+id/backbuttonframeyout"
+                android:layout_width="60dp"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="28dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_baseline_arrow_back_24"
+                    android:backgroundTint="@color/black"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical"
                 />
-
+            </FrameLayout>
             <TextView
                 android:id="@+id/chatdetailtoolbartitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="상대방이름"
                 android:textSize="22dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="60dp"
                 />
-
-            <ImageButton
-                android:id="@+id/chatdetailsidebarbutton"
-                android:layout_width="35dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/list"
-                android:background="#FFFFFF"
-                android:layout_marginEnd="10dp"
+            <FrameLayout
+                android:id="@+id/chatdetailsidebarbuttonframeyout"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                >
+                <ImageButton
+                    android:id="@+id/chatdetailsidebarbutton"
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/list"
+                    android:background="#FFFFFF"
                 />
-
+            </FrameLayout>
 
         </RelativeLayout>
 
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

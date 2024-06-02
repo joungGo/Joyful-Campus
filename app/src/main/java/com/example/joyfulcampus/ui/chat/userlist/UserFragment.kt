@@ -2,6 +2,7 @@ package com.example.joyfulcampus.ui.chat.userlist
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.joyfulcampus.R
@@ -66,6 +67,7 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                     .apply{
                         replace(R.id.frameLayout, chatdetailFragment)
                         addToBackStack(null)
+                        (requireActivity() as AppCompatActivity).setSupportActionBar(null)
                         commit()
                     }
             }
