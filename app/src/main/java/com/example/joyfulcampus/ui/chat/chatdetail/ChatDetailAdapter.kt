@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.joyfulcampus.databinding.ItemChatBinding
 import com.example.joyfulcampus.ui.chat.userlist.UserItem
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHolder>(differ) {
@@ -19,6 +20,8 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
 
     inner class ViewHolder(private val binding: ItemChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        val db = FirebaseFirestore.getInstance()
 
         //      채팅방 서로간의 채팅 내용 위치 변경
         fun bind(item: ChatDetailItem) {

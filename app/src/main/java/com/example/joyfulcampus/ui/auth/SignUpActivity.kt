@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.joyfulcampus.MainActivity
+import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key.Companion.DB_URL
 import com.example.joyfulcampus.data.Key.Companion.DB_USERS
 import com.example.joyfulcampus.databinding.ActivitySignUpBinding
@@ -21,6 +22,12 @@ class SignUpActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //      상태창 색 입히기
+        this.window.apply {
+            statusBarColor = resources.getColor(R.color.gray_cc,null)
+        }
+
 
 //      회원가입 버튼
         binding.signupButton.setOnClickListener {

@@ -28,6 +28,11 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//      상태창 색 입히기
+        this.window.apply {
+            statusBarColor = resources.getColor(R.color.gray_cc,null)
+        }
+
         var currentUser = Firebase.auth.currentUser
 
 //      로그인아웃 버튼
@@ -87,5 +92,6 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.isEnabled = true
 
     }
+
 
 }

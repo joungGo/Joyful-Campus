@@ -12,7 +12,7 @@
         android:background="#FFFFFF">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/chatToolbar"
+            android:id="@+id/chattoolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="편안한 Campus" />

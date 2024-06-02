@@ -56,6 +56,7 @@
                     android:layout_marginStart="70dp"
                     android:background="@drawable/circle"
                     android:paddingTop="7dp"
+                    android:textColor="@color/black_1"
                     android:paddingStart="7dp"
                     android:paddingEnd="7dp"
                     android:paddingBottom="7dp"
@@ -66,6 +67,7 @@
                     android:id="@+id/usernametext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black_1"
                     android:layout_marginStart="120dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
@@ -95,6 +97,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="20dp"
                     android:text="@string/accountmanagement"
+                    android:textColor="@color/black_1"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     />
@@ -114,6 +117,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:text="@string/id"
+                    android:textColor="@color/black_1"
                     android:textSize="15sp"
                     />
 
@@ -123,6 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
+                    android:textColor="@color/black_1"
                     android:layout_gravity="end"
                     android:textSize="15sp"
                     />
@@ -142,6 +147,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:text="@string/changepassword"
+                    android:textColor="@color/black_1"
                     android:textSize="15sp"
                     />
 
@@ -160,6 +166,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:text="@string/signOut"
+                    android:textColor="@color/black_1"
                     android:textSize="15sp"
                     />
 
@@ -193,6 +200,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="20dp"
                     android:text="@string/informationuse"
+                    android:textColor="@color/black_1"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     />
@@ -212,6 +220,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:text="@string/announcement"
+                    android:textColor="@color/black_1"
                     android:textSize="15sp"
                     />
 
@@ -229,6 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
+                    android:textColor="@color/black_1"
                     android:text="@string/question"
                     android:textSize="15sp"
                     />
@@ -247,6 +257,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
+                    android:textColor="@color/black_1"
                     android:text="@string/appversion"
                     android:textSize="15sp"
                     />
@@ -258,6 +269,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:layout_gravity="end"
+                    android:textColor="@color/black_1"
                     android:text="1.1"
                     android:textSize="15sp"
                     />
@@ -276,6 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
+                    android:textColor="@color/black_1"
                     android:text="@string/privacypolicy"
                     android:textSize="15sp"
                     />

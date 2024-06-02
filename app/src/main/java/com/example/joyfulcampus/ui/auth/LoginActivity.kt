@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.joyfulcampus.MainActivity
+import com.example.joyfulcampus.R
 import com.example.joyfulcampus.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
@@ -17,6 +18,11 @@ class LoginActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//      상태창 색 입히기
+        this.window.apply {
+            statusBarColor = resources.getColor(R.color.gray_cc,null)
+        }
 
         // 로그인 버튼
         binding.loginButton.setOnClickListener {
@@ -37,7 +43,7 @@ class LoginActivity: AppCompatActivity() {
                         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent)
                         finish()
-                        Snackbar.make(binding.root, "로그인에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, "로그인에 성공했습니다.", Snackbar.LENGTH_SHORT).show()
 
                     } else {
                         Snackbar.make(binding.root, "로그인에 실패했습니다.", Snackbar.LENGTH_SHORT).show()

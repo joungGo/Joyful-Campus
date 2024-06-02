@@ -24,6 +24,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.database
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.storage
@@ -194,6 +195,18 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                         .downloadUrl
                         .addOnSuccessListener {
                             successHandler(it.toString())
+
+                            val newChatItem = ChatDetailItem(
+                                imageUrl = it.toString(),
+                                userId = myUserId
+
+                            )
+
+                            Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
+                                newChatItem.chatId = key
+                                setValue(newChatItem)
+                            }
+
                         } .addOnFailureListener {
                             errorHandler(it)
                         }
@@ -202,20 +215,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 }
             }
 
-
-
-        val newChatItem = ChatDetailItem(
-            imageUrl = uri.toString(),
-            userId = myUserId
-        )
-
         val lastimage = "사진"
-
-        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
-            newChatItem.chatId = key
-            setValue(newChatItem)
-        }
-
 //          업데이트
         val updates: MutableMap<String, Any> = hashMapOf(
             "${Key.DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to lastimage,
