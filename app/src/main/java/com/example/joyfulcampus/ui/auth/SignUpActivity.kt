@@ -3,6 +3,7 @@ package com.example.joyfulcampus.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.joyfulcampus.MainActivity
 import com.example.joyfulcampus.data.Key.Companion.DB_URL
 import com.example.joyfulcampus.data.Key.Companion.DB_USERS
 import com.example.joyfulcampus.databinding.ActivitySignUpBinding
@@ -54,7 +55,7 @@ class SignUpActivity: AppCompatActivity() {
 
                             Snackbar.make(binding.root, "회원가입에 성공했습니다. ", Snackbar.LENGTH_SHORT).show()
 
-                            val intent = Intent(this, AuthActivity::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent)
                             finish()

@@ -74,7 +74,7 @@
         />
 
 
-    <TextView
+    <EditText
         android:id="@+id/signupnameEditText"
         android:layout_width="0dp"
         android:layout_height="64dp"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <TextView
+    <EditText
         android:id="@+id/signupemailEditText"
         android:layout_width="0dp"
         android:layout_height="64dp"
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@id/signupnameEditText"
         />
 
-    <TextView
+    <EditText
         android:id="@+id/signuppasswordEditText"
         android:layout_width="0dp"
         android:layout_height="64dp"
