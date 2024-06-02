@@ -30,14 +30,15 @@ class AuthActivity : AppCompatActivity() {
 
         var currentUser = Firebase.auth.currentUser
 
-//      로그아웃 버튼
+//      로그인아웃 버튼
         binding.authloginoutbutton.setOnClickListener {
-            if (currentUser == null) { //로그아웃
+            if (currentUser == null) { //로그인
                 initviewToSignOutState()
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent)
                 finish()
-            } else { //로그인
+            } else { //로그아웃
                 Firebase.auth.signOut()
                 initviewToSignOutState()
                 currentUser = null
@@ -51,6 +52,7 @@ class AuthActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else { // 로그인 상태일 때
                 val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent)
                 finish()
             }
@@ -60,6 +62,7 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.setOnClickListener {
             if (currentUser == null) {
                 val intent = Intent(this, SignUpActivity::class.java)
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent)
                 finish()
             }
@@ -84,4 +87,5 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.isEnabled = true
 
     }
+
 }
