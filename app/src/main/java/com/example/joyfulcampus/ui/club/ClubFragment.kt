@@ -143,13 +143,12 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
 
     private fun setUpRecyclerView() {
         articleAdapter = ClubArticleAdapter(
-            onItemClicked = {
-                findNavController()
-                    .navigate(
-                        ClubFragmentDirections.actionClubFragmentToClubArticleFragment(
-                            articleId = it.articleId.orEmpty()
-                        )
+            onItemClicked = { articleItem ->
+                findNavController().navigate(
+                    ClubFragmentDirections.actionClubFragmentToClubBoardFragment(
+                        clubName = articleItem.clubNameText
                     )
+                )
             },
             onBookmarkClicked = { articleId, isBookmark ->
                 val uid = Firebase.auth.currentUser?.uid ?: return@ClubArticleAdapter
