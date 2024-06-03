@@ -57,6 +57,7 @@ class SignUpActivity: AppCompatActivity() {
                             user["username"] = username
                             user["useremail"] = email
                             user["fcmToken"] = token
+                            user["userprofileurl"] = ""
 
                             Firebase.database(DB_URL).reference.child(DB_USERS).child(userId).updateChildren(user)
 

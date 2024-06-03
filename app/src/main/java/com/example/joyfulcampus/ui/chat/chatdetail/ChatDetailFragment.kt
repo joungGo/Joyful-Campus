@@ -1,14 +1,19 @@
 package com.example.joyfulcampus.ui.chat.chatdetail
 
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,12 +84,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         otherUserId = arguments?.getString(EXTRA_OTHER_USER_ID) ?: return
         myUserId = Firebase.auth.currentUser?.uid ?: ""
 
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "application/pdf"  // or another appropriate MIME type
-            putExtra(Intent.EXTRA_TITLE, "newfile.pdf")
-        }
-//      startActivityForResult(intent, CREATE_FILE_REQUEST_CODE)
+
 
         linearLayoutManager = LinearLayoutManager(getActivity())
 
@@ -123,14 +123,15 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
             }
         })
 
-//      카메라
-        binding.cameraImage.setOnClickListener {
-            dispatchTakePictureIntent()
-        }
+//      카메라 가능해지면 open
+//        binding.cameraImage.setOnClickListener {
+//        }
+        binding.cameraImage.isVisible = false
 
-        binding.clipImage.setOnClickListener {
-
-        }
+//          문서 가능해지면 open
+//        binding.clipImage.setOnClickListener {
+//        }
+        binding.clipImage.isVisible = false
 
 //      전송 버튼
         binding.sendbutton.setOnClickListener{
@@ -181,6 +182,13 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 }
         }
 
+//      sidebar
+//        binding.chatdetailsidebarbutton.setOnClickListener {
+//        }
+//        binding.chatdetailsidebarframeyout.setOnClickListener {
+//        }
+        binding.chatdetailsidebarbutton.isVisible = false
+
 
     }
 
@@ -219,15 +227,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         })
     }
 
-    val REQUEST_IMAGE_CAPTURE = 1
 
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-        }
-    }
 
     private fun setupPhotoImage(view : View){
         binding.photoImage.setOnClickListener {
@@ -294,14 +294,30 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         Firebase.firestore.collection("chat").document(articleId)
             .set(ChatDetailItem)
             .addOnSuccessListener {
+                Log.d(TAG, "Firestore 올림")
 
             }.addOnFailureListener{
             }
     }
 
+//    문서 였던것
+    private fun createFile(pickerInitialUri: Uri) {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/pdf"
+            putExtra(Intent.EXTRA_TITLE, "invoice.pdf")
+
+            // Optionally, specify a URI for the directory that should be opened in
+            // the system file picker before your app creates the document.
+            putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
+        }
+        startActivityForResult(intent, Companion.CREATE_FILE)
+    }
+
     companion object {
         const val EXTRA_CHAT_ROOM_ID = "CHAT_ROOM_ID"
         const val EXTRA_OTHER_USER_ID = "OTHER_USER_ID"
+        const val CREATE_FILE = 1
     }
 
     private fun replaceFragment(fragment: Fragment) {

@@ -1,28 +1,63 @@
 package com.example.joyfulcampus.ui.mypage
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key
 import com.example.joyfulcampus.databinding.FragmentMypageHomeBinding
 import com.example.joyfulcampus.ui.auth.AuthActivity
+import com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailItem
+import com.example.joyfulcampus.ui.chat.userlist.UserItem
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.database
+import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
 import com.google.rpc.context.AttributeContext.Auth
+import java.util.UUID
 
 class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
     private lateinit var binding: FragmentMypageHomeBinding
 
+    private var selectedUrl: Uri? = null
+    private var myUserId: String = ""
+
+
+    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        // Callback is invoked after the user selects a media item or closes the
+        // photo picker.
+        if (uri != null) {
+            selectedUrl = uri
+            if (selectedUrl != null) {
+                val userprofileurl = selectedUrl ?: return@registerForActivityResult
+                uploadImage(
+                    uri = userprofileurl,
+                    successHandler = {
+                        Log.d(TAG, "사진 가져옴")
+                        uploadImageprofile(it)
+                    },
+                    errorHandler = {
+                    })
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,7 +66,7 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
         mypagetoolbar()
 
 //      Firebase realtime database 가져올 위치 설정
-        val myUserId = Firebase.auth.currentUser?.uid ?: ""
+        myUserId = Firebase.auth.currentUser?.uid ?: ""
         val userDB = Firebase.database.reference.child(Key.DB_USERS).child(myUserId)
 
 //      이름 가져오기
@@ -49,6 +84,42 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
             binding.useridtextview.text = useremail ?: "No userid found"
         }
 
+//      프로필 가져오기
+        userDB.child("userprofileurl").get().addOnSuccessListener {
+            val userprofileurl = it.getValue(String::class.java)
+            Glide.with(binding.profileimage)
+                .load(userprofileurl)
+                .into(binding.profileimage)
+        }
+
+//      프로필 변경하기
+        binding.profileeditbotton.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            userDB.child("userprofileurl").get().addOnSuccessListener {
+                val userprofileurl = it.getValue(String::class.java)
+                Glide.with(binding.profileimage)
+                    .load(userprofileurl)
+                    .into(binding.profileimage)
+            }
+        }
+
+
+//      비밀번호 변경
+        binding.passwordframelayout.setOnClickListener {
+            userDB.child("useremail").get().addOnSuccessListener {
+                val useremail = it.getValue(String::class.java)
+                if (useremail != null) {
+                    Firebase.auth.sendPasswordResetEmail(useremail)
+                        .addOnCompleteListener {task ->
+                            if(task.isSuccessful){
+                                Snackbar.make(binding.root, "이메일로 승인 요청했습니다. \n이메일에서 비밀번호를 변경해주세요", Snackbar.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+            }
+        }
+
+
 //      로그아웃
         binding.logoutframelayout.setOnClickListener{
             Firebase.auth.signOut()
@@ -58,6 +129,49 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
 
     }
 
+    private fun uploadImage(
+        uri: Uri,
+        successHandler: (String) -> Unit,
+        errorHandler: (Throwable?) -> Unit,
+    ){
+        val fileName = "${UUID.randomUUID()}.png"
+        Firebase.storage.reference.child("mypage/photo").child(fileName)
+            .putFile(uri)
+            .addOnCompleteListener { task ->
+                if ( task.isSuccessful ){
+                    Firebase.storage.reference.child("mypage/photo/${fileName}")
+                        .downloadUrl
+                        .addOnSuccessListener {
+                            successHandler(it.toString())
+
+                            val user = mutableMapOf<String, Any>()
+                            user["userprofileurl"] = it.toString()
+
+                            Firebase.database(Key.DB_URL).reference.child(Key.DB_USERS).child(myUserId).updateChildren(user)
+
+                        } .addOnFailureListener {
+                            errorHandler(it)
+                        }
+                } else {
+                    errorHandler(task.exception)
+                }
+            }
+    }
+
+    private fun uploadImageprofile(userprofileurl: String){
+        val articleId = UUID.randomUUID().toString()
+        val UserItem = UserItem(
+            userprofileurl = userprofileurl,
+            userId = myUserId
+        )
+
+        Firebase.firestore.collection("mypage").document(articleId)
+            .set(UserItem)
+            .addOnSuccessListener {
+                Log.d(TAG, "Firestore 올림")
+            }.addOnFailureListener{
+            }
+    }
 
     private fun mypagetoolbar() {
         // Toolbar 설정
