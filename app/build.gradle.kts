@@ -68,6 +68,7 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation( "androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation(libs.play.services.cast.framework)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -75,6 +76,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
 
     // material design
     implementation("com.google.android.material:material:1.4.0")

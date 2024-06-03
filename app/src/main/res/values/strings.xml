@@ -43,4 +43,38 @@
         <item>예술</item>
         <item>기타</item>
     </string-array>
+
+    <string name="add_content">Add Content</string>
+    <string name="save">Save</string>
+
+    <!-- ClubBoardFragment -->
+    <string name="club_board">Club Board</string>
+
+    <!-- ClubIntroFragment -->
+    <string name="club_image">Club Image</string>
+    <string name="club_name">Club Name</string>
+    <string name="club_description">Club Description</string>
+    <string name="club_long_description">Detailed Club Description</string>
+
+    <!-- ClubNoticeFragment -->
+    <string name="notice_image">Notice Image</string>
+    <string name="notice_club_name">Club Name</string>
+    <string name="recruitment_period">Recruitment Period</string>
+    <string name="interview">Interview</string>
+    <string name="notice_content">Notice Content</string>
+
+    <!-- Tab titles -->
+    <string name="tab_intro">소개</string>
+    <string name="tab_free">자유</string>
+    <string name="tab_activity">활동</string>
+    <string name="tab_notice">공고문</string>
+
+    <!-- Input page strings -->
+    <string name="input_club_name">Enter Club Name</string>
+    <string name="input_club_description">Enter Short Description</string>
+    <string name="input_club_long_description">Enter Detailed Description</string>
+    <string name="input_notice_club_name">Enter Club Name</string>
+    <string name="input_notice_recruitment_period">Enter Recruitment Period</string>
+    <string name="input_notice_interview">Enter Interview Details</string>
+    <string name="input_notice_content">Enter Notice Content</string>
 </resources>
