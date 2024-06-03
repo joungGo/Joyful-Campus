@@ -11,6 +11,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -19,6 +20,7 @@
                 android:id="@+id/backbuttonframeyout"
                 android:layout_width="60dp"
                 android:layout_height="match_parent">
+
                 <ImageButton
                     android:id="@+id/backButton"
                     android:layout_width="28dp"
@@ -27,13 +29,15 @@
                     android:backgroundTint="@color/black"
                     android:layout_marginStart="16dp"
                     android:layout_gravity="center_vertical"
-                />
+                    />
+
             </FrameLayout>
             <TextView
                 android:id="@+id/chatdetailtoolbartitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22dp"
+                android:textSize="22sp"
+                android:textColor="@color/black_1"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="60dp"
                 />
@@ -41,7 +45,7 @@
                 android:id="@+id/chatdetailsidebarbuttonframeyout"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 >
                 <ImageButton
                     android:id="@+id/chatdetailsidebarbutton"
@@ -68,10 +72,12 @@
             android:id="@+id/chatdetailRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:overScrollMode="always"
+            app:layout_constraintBottom_toTopOf="@id/messageBoxLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/messageBoxLayout"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             app:layout_constraintTop_toBottomOf="@id/chatdetailRecyclerView"

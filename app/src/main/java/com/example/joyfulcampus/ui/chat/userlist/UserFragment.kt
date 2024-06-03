@@ -67,7 +67,6 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                     .apply{
                         replace(R.id.frameLayout, chatdetailFragment)
                         addToBackStack(null)
-                        (requireActivity() as AppCompatActivity).setSupportActionBar(null)
                         commit()
                     }
             }

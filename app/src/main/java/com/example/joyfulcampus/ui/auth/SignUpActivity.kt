@@ -62,11 +62,11 @@ class SignUpActivity: AppCompatActivity() {
 
                             Snackbar.make(binding.root, "회원가입에 성공했습니다. ", Snackbar.LENGTH_SHORT).show()
 
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, AuthActivity::class.java)
                             intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent)
                             finish()
-                        } // 예외 처릭 가능 .addOnFailureListener()
+                        } // 예외 처리 가능 .addOnFailureListener()
                     } else {
                         Snackbar.make(binding.root, "회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
                     }

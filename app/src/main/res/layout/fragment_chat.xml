@@ -14,6 +14,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/chattoolbar"
             android:layout_width="match_parent"
+            android:background="@color/white_1"
             android:layout_height="?attr/actionBarSize"
             app:title="편안한 Campus" />
 

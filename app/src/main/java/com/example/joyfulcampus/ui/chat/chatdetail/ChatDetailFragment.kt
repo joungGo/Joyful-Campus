@@ -70,7 +70,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
 
         setupPhotoImage(view)
 
-        (requireActivity() as AppCompatActivity).setSupportActionBar(null)
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         ChatDetailAdapter = ChatDetailAdapter()
 
@@ -86,43 +86,15 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         }
 //      startActivityForResult(intent, CREATE_FILE_REQUEST_CODE)
 
-        linearLayoutManager = LinearLayoutManager(requireContext())
+        linearLayoutManager = LinearLayoutManager(getActivity())
 
 
         Firebase.database.reference.child(Key.DB_USERS).child(myUserId).get().addOnSuccessListener {
             val myUserItem = it.getValue(UserItem::class.java)
             myUserName = myUserItem?.username ?: ""
+
+            getOtherUserData()
         }
-
-        Firebase.database.reference.child(Key.DB_USERS).child(otherUserId).get()
-            .addOnSuccessListener {
-                val otherUserItem = it.getValue(UserItem::class.java)
-                ChatDetailAdapter.otherUserItem = otherUserItem
-
-                if (otherUserItem != null) {
-                    binding.chatdetailtoolbartitle.text = otherUserItem.username
-                }
-            }
-
-//      채팅 내용
-        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatdetailItem = snapshot.getValue(ChatDetailItem::class.java)
-                chatdetailItem ?: return
-
-                chatItemList.add(chatdetailItem)
-                ChatDetailAdapter.submitList(chatItemList.toMutableList())
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onCancelled(error: DatabaseError) {}
-
-        })
 
         binding.chatdetailRecyclerView.apply {
             layoutManager = linearLayoutManager
@@ -146,7 +118,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 linearLayoutManager.smoothScrollToPosition(
                     binding.chatdetailRecyclerView,
                     null,
-                    ChatDetailAdapter.itemCount
+                    ChatDetailAdapter.itemCount - 1
                 )
             }
         })
@@ -210,6 +182,41 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         }
 
 
+    }
+
+    private fun getOtherUserData(){
+        Firebase.database.reference.child(Key.DB_USERS).child(otherUserId).get()
+            .addOnSuccessListener {
+                val otherUserItem = it.getValue(UserItem::class.java)
+                if (otherUserItem != null) {
+                    binding.chatdetailtoolbartitle.text = otherUserItem.username
+                }
+                ChatDetailAdapter.otherUserItem = otherUserItem
+
+                getChatData()
+            }
+    }
+
+    private fun getChatData(){
+        //      채팅 내용
+        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatdetailItem = snapshot.getValue(ChatDetailItem::class.java)
+                chatdetailItem ?: return
+
+                chatItemList.add(chatdetailItem)
+                ChatDetailAdapter.submitList(chatItemList.toMutableList())
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
     }
 
     val REQUEST_IMAGE_CAPTURE = 1
