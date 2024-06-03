@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Menu">
+        <menu>
+            <item
+                android:id="@+id/hompage"
+                android:icon="@drawable/sidebar_hompage_icon"
+                android:title="학교 홈페이지" />
+            <item
+                android:id="@+id/portal"
+                android:icon="@drawable/sidebar_portal_icon"
+                android:title="포털" />
+            <item
+                android:id="@+id/schedule"
+                android:icon="@drawable/sidebar_schedule_icon"
+                android:title="학사 일정" />
+            <item
+                android:id="@+id/schedule_notice"
+                android:icon="@drawable/alarm_icon"
+                android:title="학사 공지" />
+        </menu>
+    </item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/account"
+                android:icon="@drawable/sidebar_account"
+                android:title="계정" />
+            <item
+                android:id="@+id/security"
+                android:icon="@drawable/sidebar_security_icon"
+                android:title="보안" />
+        </menu>
+    </item>
+
+    <item android:title="Notice">
+        <menu>
+            <item
+                android:id="@+id/alarm1"
+                android:icon="@drawable/sidebar_notice_icon"
+                android:title="알림1" />
+            <item
+                android:id="@+id/alarm2"
+                android:icon="@drawable/sidebar_notice_icon"
+                android:title="알림2" />
+        </menu>
+    </item>
+
+</menu>

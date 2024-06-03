@@ -8,4 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray_cc">#cccccc</color>
+
+    <color name="sports_color">#FF2E86AB</color>
+    <color name="medical_color">#FF00BD59</color>
+    <color name="volunteer_color">#FFFFA500</color>
+    <color name="coding_color">#333333</color>
+    <color name="startup_color">#FF3F75FF</color>
+    <color name="religion_color">#FF8B4513</color>
+    <color name="art_color">#FFFF625C</color>
+    <color name="things_color">#FF5E5E60</color>
+    <color name="편안한">#7B61FF</color>
 </resources>

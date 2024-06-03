@@ -7,27 +7,153 @@
 
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.joyfulcampus.chat.ChatFragment"
+        android:name="com.example.joyfulcampus.ui.chat.ChatFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat" />
+
     <fragment
         android:id="@+id/clubFragment"
-        android:name="com.example.joyfulcampus.club.ClubFragment"
+        android:name="com.example.joyfulcampus.ui.club.ClubFragment"
         android:label="ClubFragment"
-        tools:layout="@layout/fragment_club" />
+        tools:layout="@layout/fragment_club">
+        <action
+            android:id="@+id/action_clubFragment_to_addArticleFragment"
+            app:destination="@id/addArticleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_clubFragment_to_clubArticleFragment"
+            app:destination="@id/clubArticleFragment" />
+        <action
+            android:id="@+id/action_clubFragment_to_bookMarkArticleFragment"
+            app:destination="@id/bookMarkArticleFragment" />
+        <action
+            android:id="@+id/action_clubFragment_to_clubBoardFragment"
+            app:destination="@id/clubBoardFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/foodFragment"
-        android:name="com.example.joyfulcampus.food.FoodFragment"
+        android:name="com.example.joyfulcampus.ui.food.FoodFragment"
         android:label="FoodFragment"
         tools:layout="@layout/fragment_food" />
+
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.joyfulcampus.home.HomeFragment"
+        android:name="com.example.joyfulcampus.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.example.joyfulcampus.mypage.MyPageFragment"
+        android:name="com.example.joyfulcampus.ui.mypage.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage" />
+
+    <fragment
+        android:id="@+id/addArticleFragment"
+        android:name="com.example.joyfulcampus.ui.club.article.AddArticleFragment"
+        android:label="AddArticleFragment">
+        <action
+            android:id="@+id/action_addArticleFragment_to_clubFragment"
+            app:destination="@id/clubFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/actionBack"
+            app:destination="@id/clubFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clubArticleFragment"
+        android:name="com.example.joyfulcampus.ui.club.article.ClubArticleFragment"
+        android:label="동아리 상세보기">
+        <argument
+            android:name="articleId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookMarkArticleFragment"
+        android:name="com.example.joyfulcampus.ui.bookmark.BookMarkArticleFragment"
+        android:label="북마크">
+        <action
+            android:id="@+id/action_bookMarkArticleFragment_to_clubArticleFragment"
+            app:destination="@id/clubArticleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment"
+        android:label="ChatDetailFragment"
+        tools:layout="@layout/fragment_chatdetail" />
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_userlist" />
+
+    <!-- ClubBoardFragment -->
+    <fragment
+        android:id="@+id/clubBoardFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.ClubBoardFragment"
+        android:label="ClubBoardFragment">
+        <argument
+            android:name="clubName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_clubBoardFragment_to_introInputFragment"
+            app:destination="@id/introInputFragment" />
+        <action
+            android:id="@+id/action_clubBoardFragment_to_noticeInputFragment"
+            app:destination="@id/noticeInputFragment" />
+    </fragment>
+
+    <!-- ClubBoard Tabs -->
+    <fragment
+        android:id="@+id/clubIntroFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.ClubIntroFragment"
+        android:label="ClubIntroFragment">
+        <action
+            android:id="@+id/action_clubIntroFragment_to_introInputFragment"
+            app:destination="@id/introInputFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clubFreeFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.ClubFreeFragment"
+        android:label="ClubFreeFragment" />
+
+    <fragment
+        android:id="@+id/clubActivityFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.ClubActivityFragment"
+        android:label="ClubActivityFragment" />
+
+    <fragment
+        android:id="@+id/clubNoticeFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.ClubNoticeFragment">
+        <action
+            android:id="@+id/action_clubNoticeFragment_to_noticeInputFragment"
+            app:destination="@id/noticeInputFragment" />
+    </fragment>
+
+    <!-- Input Fragments -->
+    <fragment
+        android:id="@+id/introInputFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.input.IntroInputFragment"
+        android:label="IntroInputFragment" />
+
+    <fragment
+        android:id="@+id/noticeInputFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.input.NoticeInputFragment"
+        android:label="NoticeInputFragment" />
 </navigation>
