@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray_cc">#cccccc</color>
 
+    <color name="gray">#33000000</color>
+    <color name="white_1">#FFFFFFFF</color>
+    <color name="black_1">#FF000000</color>
     <color name="sports_color">#FF2E86AB</color>
     <color name="medical_color">#FF00BD59</color>
     <color name="volunteer_color">#FFFFA500</color>
