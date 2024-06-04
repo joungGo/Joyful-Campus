@@ -1,13 +1,10 @@
 package com.example.joyfulcampus.ui.chat.chatdetail
 
-import android.content.ActivityNotFoundException
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
