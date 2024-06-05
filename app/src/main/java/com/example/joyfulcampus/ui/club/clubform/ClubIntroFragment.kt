@@ -8,13 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.joyfulcampus.R
-import com.example.joyfulcampus.data.ClubViewModel
 import com.example.joyfulcampus.databinding.FragmentClubIntroBinding
 
 class ClubIntroFragment : Fragment(R.layout.fragment_club_intro) {
 
     private lateinit var binding: FragmentClubIntroBinding
-    private val viewModel: ClubViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +25,11 @@ class ClubIntroFragment : Fragment(R.layout.fragment_club_intro) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.introData.observe(viewLifecycleOwner) { introData ->
+        /*viewModel.introData.observe(viewLifecycleOwner) { introData ->
             binding.clubName.text = introData.clubName
             binding.clubDescription.text = introData.clubDescription
             binding.clubLongDescription.text = introData.clubLongDescription
-        }
+        }*/
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_clubBoardFragment_to_introInputFragment)
