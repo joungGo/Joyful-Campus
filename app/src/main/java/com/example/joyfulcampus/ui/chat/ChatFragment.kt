@@ -42,10 +42,8 @@ class ChatFragment: Fragment(R.layout.fragment_chat) {
                     return@setOnItemSelectedListener false
                 }
             }
-
         }
         replaceFragment(userFragment)
-
     }
 
 // frameLayout 과 연결
@@ -55,7 +53,6 @@ class ChatFragment: Fragment(R.layout.fragment_chat) {
                 replace(R.id.frameLayout, fragment)
                 commit()
             }
-
     }
 
     private fun chattoolbar() {
