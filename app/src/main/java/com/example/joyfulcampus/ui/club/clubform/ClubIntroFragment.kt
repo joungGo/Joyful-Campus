@@ -36,5 +36,3 @@ class ClubIntroFragment : Fragment(R.layout.fragment_club_intro) {
         }
     }
 }
-
-
