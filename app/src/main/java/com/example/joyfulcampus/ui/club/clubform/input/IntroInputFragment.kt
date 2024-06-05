@@ -58,10 +58,12 @@ class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
                 uploadImageToFirebaseStorage(selectedImageUri!!) { imageUrl ->
                     val introData = IntroData(clubName, clubDescription, clubLongDescription, imageUrl)
                     saveIntroDataToFirestore(introData)
+                    viewModel.saveIntroData(introData)  // ViewModel에 데이터 저장
                 }
             } else {
                 val introData = IntroData(clubName, clubDescription, clubLongDescription, "")
                 saveIntroDataToFirestore(introData)
+                viewModel.saveIntroData(introData)  // ViewModel에 데이터 저장
             }
         }
     }
@@ -99,7 +101,6 @@ class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
             .set(introData)
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully written!")
-                viewModel.saveIntroData(introData)
                 findNavController().navigateUp()
             }
             .addOnFailureListener { exception ->

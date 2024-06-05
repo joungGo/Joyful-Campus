@@ -10,7 +10,7 @@ class ClubViewModel : ViewModel() {
     private val _introData = MutableLiveData<IntroData>()
     val introData: LiveData<IntroData> get() = _introData
 
-    fun saveIntroData(introData: IntroData) {
-        _introData.value = introData
+    fun saveIntroData(data: IntroData) {
+        _introData.value = data
     }
 }
