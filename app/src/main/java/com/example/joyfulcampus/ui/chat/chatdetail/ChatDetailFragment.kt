@@ -1,21 +1,23 @@
 package com.example.joyfulcampus.ui.chat.chatdetail
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.provider.DocumentsContract
+import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key
 import com.example.joyfulcampus.databinding.FragmentChatdetailBinding
+import com.example.joyfulcampus.ui.chat.ChatFragment
 import com.example.joyfulcampus.ui.chat.userlist.UserItem
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
@@ -56,7 +58,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 uploadImage(
                     uri = photoUri,
                     successHandler = {
-                                     uploadImagechat(it)
+                        uploadImagechat(it)
                     },
                     errorHandler = {
                     })
@@ -70,6 +72,8 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
 
         setupPhotoImage(view)
 
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+
         ChatDetailAdapter = ChatDetailAdapter()
 
 //      fragment 간 정보를 arguments를 통해 데이터를 받아옵니다
@@ -78,40 +82,16 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         myUserId = Firebase.auth.currentUser?.uid ?: ""
 
 
-        linearLayoutManager = LinearLayoutManager(requireContext())
+
+        linearLayoutManager = LinearLayoutManager(getActivity())
 
 
         Firebase.database.reference.child(Key.DB_USERS).child(myUserId).get().addOnSuccessListener {
             val myUserItem = it.getValue(UserItem::class.java)
             myUserName = myUserItem?.username ?: ""
+
+            getOtherUserData()
         }
-
-        Firebase.database.reference.child(Key.DB_USERS).child(otherUserId).get()
-            .addOnSuccessListener {
-                val otherUserItem = it.getValue(UserItem::class.java)
-                ChatDetailAdapter.otherUserItem = otherUserItem
-
-            }
-
-//      채팅 내용
-        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatdetailItem = snapshot.getValue(ChatDetailItem::class.java)
-                chatdetailItem ?: return
-
-                chatItemList.add(chatdetailItem)
-                ChatDetailAdapter.submitList(chatItemList.toMutableList())
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onCancelled(error: DatabaseError) {}
-
-        })
 
         binding.chatdetailRecyclerView.apply {
             layoutManager = linearLayoutManager
@@ -121,11 +101,10 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         Firebase.firestore.collection("chat")
             .get()
             .addOnSuccessListener { result ->
-                val list  = result.map {
+                result.map {
                     it.toObject<ChatDetailItem>()
                 }
 
-                ChatDetailAdapter.submitList(list)
             }
 
 
@@ -136,13 +115,23 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 linearLayoutManager.smoothScrollToPosition(
                     binding.chatdetailRecyclerView,
                     null,
-                    ChatDetailAdapter.itemCount
+                    ChatDetailAdapter.itemCount - 1
                 )
             }
         })
 
+//      카메라 가능해지면 open
+//        binding.cameraImage.setOnClickListener {
+//        }
+        binding.cameraImage.isVisible = false
+
+//          문서 가능해지면 open
+//        binding.clipImage.setOnClickListener {
+//        }
+        binding.clipImage.isVisible = false
+
 //      전송 버튼
-        binding.sendImage.setOnClickListener{
+        binding.sendbutton.setOnClickListener{
             val message = binding.messageEditText.text.toString()
 
             if (message.isEmpty()){
@@ -173,7 +162,69 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
 
             binding.messageEditText.text.clear()
         }
+
+        binding.backButton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .apply{
+                    replace(R.id.frameLayout, ChatFragment())
+                    commit()
+                }
+        }
+
+        binding.backbuttonframeyout.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .apply{
+                    replace(R.id.frameLayout, ChatFragment())
+                    commit()
+                }
+        }
+
+//      sidebar
+//        binding.chatdetailsidebarbutton.setOnClickListener {
+//        }
+//        binding.chatdetailsidebarframeyout.setOnClickListener {
+//        }
+        binding.chatdetailsidebarbutton.isVisible = false
+
+
     }
+
+    private fun getOtherUserData(){
+        Firebase.database.reference.child(Key.DB_USERS).child(otherUserId).get()
+            .addOnSuccessListener {
+                val otherUserItem = it.getValue(UserItem::class.java)
+                if (otherUserItem != null) {
+                    binding.chatdetailtoolbartitle.text = otherUserItem.username
+                }
+                ChatDetailAdapter.otherUserItem = otherUserItem
+
+                getChatData()
+            }
+    }
+
+    private fun getChatData(){
+        //      채팅 내용
+        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatdetailItem = snapshot.getValue(ChatDetailItem::class.java)
+                chatdetailItem ?: return
+
+                chatItemList.add(chatdetailItem)
+                ChatDetailAdapter.submitList(chatItemList.toMutableList())
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
+
+
 
     private fun setupPhotoImage(view : View){
         binding.photoImage.setOnClickListener {
@@ -195,6 +246,18 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                         .downloadUrl
                         .addOnSuccessListener {
                             successHandler(it.toString())
+
+                            val newChatItem = ChatDetailItem(
+                                imageUrl = it.toString(),
+                                userId = myUserId
+
+                            )
+
+                            Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
+                                newChatItem.chatId = key
+                                setValue(newChatItem)
+                            }
+
                         } .addOnFailureListener {
                             errorHandler(it)
                         }
@@ -203,20 +266,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 }
             }
 
-
-
-        val newChatItem = ChatDetailItem(
-            imageUrl = uri.toString(),
-            userId = myUserId
-        )
-
         val lastimage = "사진"
-
-        Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
-            newChatItem.chatId = key
-            setValue(newChatItem)
-        }
-
 //          업데이트
         val updates: MutableMap<String, Any> = hashMapOf(
             "${Key.DB_CHAT_ROOMS}/$myUserId/$otherUserId/lastMessage" to lastimage,
@@ -241,17 +291,30 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
         Firebase.firestore.collection("chat").document(articleId)
             .set(ChatDetailItem)
             .addOnSuccessListener {
+                Log.d(TAG, "Firestore 올림")
 
             }.addOnFailureListener{
-                view?.let {view ->
-                Snackbar.make(view, "글 작성에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
-                }
             }
+    }
+
+//    문서 였던것
+    private fun createFile(pickerInitialUri: Uri) {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/pdf"
+            putExtra(Intent.EXTRA_TITLE, "invoice.pdf")
+
+            // Optionally, specify a URI for the directory that should be opened in
+            // the system file picker before your app creates the document.
+            putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
+        }
+        startActivityForResult(intent, Companion.CREATE_FILE)
     }
 
     companion object {
         const val EXTRA_CHAT_ROOM_ID = "CHAT_ROOM_ID"
         const val EXTRA_OTHER_USER_ID = "OTHER_USER_ID"
+        const val CREATE_FILE = 1
     }
 
     private fun replaceFragment(fragment: Fragment) {

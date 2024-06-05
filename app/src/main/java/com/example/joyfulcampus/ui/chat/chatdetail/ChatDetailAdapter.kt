@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.joyfulcampus.databinding.ItemChatBinding
 import com.example.joyfulcampus.ui.chat.userlist.UserItem
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHolder>(differ) {
@@ -20,32 +21,57 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
     inner class ViewHolder(private val binding: ItemChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        val db = FirebaseFirestore.getInstance()
+
         //      채팅방 서로간의 채팅 내용 위치 변경
         fun bind(item: ChatDetailItem) {
 
 
             if (item.userId == otherUserItem?.userId) {
-                binding.mymessageTextView.isVisible = false
-                binding.profileImageView.isVisible = true
-                binding.nicknameTextView.isVisible = true
-                binding.messageTextView.isVisible = true
-                binding.nicknameTextView.text = otherUserItem?.username
-                binding.messageTextView.text = item.message
-                binding.messageTextView.gravity = Gravity.START
-                binding.chatImage
-                Glide.with(binding.chatImage)
-                    .load(item.imageUrl)
-                    .into(binding.chatImage)
+                if (item.imageUrl == null){
+                    binding.chatImage.isVisible = false
+                    binding.mychatImage.isVisible = false
+                    binding.mymessageTextView.isVisible = false
+                    binding.profileImageView.isVisible = true
+                    binding.nicknameTextView.isVisible = true
+                    binding.messageTextView.isVisible = true
+                    binding.nicknameTextView.text = otherUserItem?.username
+                    binding.messageTextView.text = item.message
+                    binding.messageTextView.gravity = Gravity.START
+                } else {
+                    binding.chatImage.isVisible = true
+                    binding.mychatImage.isVisible = false
+                    binding.mymessageTextView.isVisible = false
+                    binding.profileImageView.isVisible = true
+                    binding.nicknameTextView.isVisible = true
+                    binding.messageTextView.isVisible = false
+                    binding.nicknameTextView.text = otherUserItem?.username
+                    binding.chatImage
+                    Glide.with(binding.chatImage)
+                        .load(item.imageUrl)
+                        .into(binding.chatImage)
+                }
             } else {
-                binding.mymessageTextView.isVisible = true
-                binding.profileImageView.isVisible = false
-                binding.nicknameTextView.isVisible = false
-                binding.messageTextView.isVisible = false
-                binding.mymessageTextView.text = item.message
-                binding.chatImage
-                Glide.with(binding.mychatImage)
-                    .load(item.imageUrl)
-                    .into(binding.mychatImage)
+                if (item.imageUrl == null){
+                    binding.chatImage.isVisible = false
+                    binding.mychatImage.isVisible = false
+                    binding.mymessageTextView.isVisible = true
+                    binding.profileImageView.isVisible = false
+                    binding.nicknameTextView.isVisible = false
+                    binding.messageTextView.isVisible = false
+                    binding.mymessageTextView.text = item.message
+                } else {
+                    binding.chatImage.isVisible = false
+                    binding.mychatImage.isVisible = true
+                    binding.mymessageTextView.isVisible = false
+                    binding.profileImageView.isVisible = false
+                    binding.nicknameTextView.isVisible = false
+                    binding.messageTextView.isVisible = false
+                    binding.mychatImage
+                    Glide.with(binding.mychatImage)
+                        .load(item.imageUrl)
+                        .into(binding.mychatImage)
+                }
             }
         }
 

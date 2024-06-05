@@ -96,6 +96,7 @@
         android:label="ChatDetailFragment"
         tools:layout="@layout/fragment_chatdetail" />
 
+
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"
