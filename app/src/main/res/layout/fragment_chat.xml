@@ -5,37 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/chattoolbarimage"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@drawable/chattoolbarimage"
-        />
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/chattoolbar"
-            android:layout_width="match_parent"
-            android:background="@color/white_1"
-            android:layout_height="?attr/actionBarSize"
-            app:title="편안한 Campus" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-    
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/subToolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="64dp"
+        android:layout_height="104dp"
         >
 
-
+<!--        검색      -->
 <!--        <androidx.appcompat.widget.SearchView-->
 <!--            android:id="@+id/search"-->
 <!--            android:layout_width="50dp"-->
@@ -45,9 +21,6 @@
 <!--            app:layout_constraintStart_toEndOf="@id/chatnavi"-->
 <!--            app:layout_constraintEnd_toEndOf="parent"-->
 <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-
-
 <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
 <!--            android:id="@+id/chatnavi"-->
 <!--            android:layout_width="wrap_content"-->
@@ -63,10 +36,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#CCE6FF"
-            app:menu="@menu/menu_chat" />
+            app:menu="@menu/menu_chat"
+            app:itemTextColor="@drawable/bottom_navigation_color"
+            app:itemIconTint="@drawable/bottom_navigation_color"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/chattoolbarimage"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:src="@drawable/chattoolbarimage"
+        android:clickable="true"
+        />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/chattoolbar"
+            android:layout_width="match_parent"
+            android:background="@color/white_1"
+            android:layout_height="?attr/actionBarSize"
+            app:title="편안한 Campus" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.databinding.FragmentChatBinding
@@ -24,6 +25,7 @@ class ChatFragment: Fragment(R.layout.fragment_chat) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChatBinding.bind(view)
 
+        binding.chatnavi.isVisible = true
         chattoolbar()
 
         binding.chatnavi.setOnItemSelectedListener {

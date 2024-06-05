@@ -21,6 +21,11 @@
         <item name="cornerSize">50%</item> <!-- 50%는 원을 의미합니다. 조정하여 크기를 변경할 수 있습니다. -->
     </style>
 
+    <style name="RoundedShape38Percent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">38%</item> <!-- 50%는 원을 의미합니다. 조정하여 크기를 변경할 수 있습니다. -->
+    </style>
+
 
     <style name="Theme.JoyfulCampus.NoActionBar">
         <item name="windowActionBar">false</item>

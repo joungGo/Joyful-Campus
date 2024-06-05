@@ -27,6 +27,9 @@ import com.example.joyfulcampus.ui.chat.userlist.UserItem
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
@@ -84,25 +87,25 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
             binding.useridtextview.text = useremail ?: "No userid found"
         }
 
-//      프로필 가져오기
-        userDB.child("userprofileurl").get().addOnSuccessListener {
-            val userprofileurl = it.getValue(String::class.java)
-            Glide.with(binding.profileimage)
-                .load(userprofileurl)
-                .into(binding.profileimage)
-        }
+
 
 //      프로필 변경하기
         binding.profileeditbotton.setOnClickListener {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            userDB.child("userprofileurl").get().addOnSuccessListener {
-                val userprofileurl = it.getValue(String::class.java)
-                Glide.with(binding.profileimage)
-                    .load(userprofileurl)
-                    .into(binding.profileimage)
-            }
         }
 
+//      프로필 가져오기
+        userDB.child("userprofileurl").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userprofileurl = snapshot.getValue(String::class.java)
+                Glide.with(binding.profileimage).load(userprofileurl).into(binding.profileimage)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle possible errors.
+                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+            }
+        })
 
 //      비밀번호 변경
         binding.passwordframelayout.setOnClickListener {
@@ -165,7 +168,7 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
             userId = myUserId
         )
 
-        Firebase.firestore.collection("mypage").document(articleId)
+        Firebase.firestore.collection("mypage").document(myUserId)
             .set(UserItem)
             .addOnSuccessListener {
                 Log.d(TAG, "Firestore 올림")

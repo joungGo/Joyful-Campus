@@ -37,14 +37,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profileimage"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_baseline_person_24"
+                    android:src="@drawable/ic_baseline_person_25"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    android:background="@drawable/profilebox"
+                    app:shapeAppearanceOverlay="@style/RoundedShape38Percent"
                     />
 
                 <ImageView
