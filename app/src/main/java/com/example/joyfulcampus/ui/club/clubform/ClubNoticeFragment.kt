@@ -8,13 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.joyfulcampus.R
-import com.example.joyfulcampus.data.ClubViewModel
 import com.example.joyfulcampus.databinding.FragmentClubNoticeBinding
 
 class ClubNoticeFragment : Fragment(R.layout.fragment_club_notice) {
 
     private lateinit var binding: FragmentClubNoticeBinding
-    private val viewModel: ClubViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,12 +25,12 @@ class ClubNoticeFragment : Fragment(R.layout.fragment_club_notice) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.noticeData.observe(viewLifecycleOwner) { noticeData ->
+        /*viewModel.noticeData.observe(viewLifecycleOwner) { noticeData ->
             binding.noticeClubName.text = noticeData.clubName
             binding.noticeRecruitmentPeriod.text = noticeData.recruitmentPeriod
             binding.noticeInterview.text = noticeData.interview
             binding.noticeContent.text = noticeData.noticeContent
-        }
+        }*/
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_clubBoardFragment_to_noticeInputFragment)
