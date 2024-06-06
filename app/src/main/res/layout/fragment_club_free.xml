@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.club.board.ClubFreeFragment">
+    tools:context=".ui.club.clubform.ClubFreeFragment">
 
     <!-- 자유 게시판 기본 틀 -->
 
