@@ -1,3 +1,4 @@
+
 package com.example.joyfulcampus.ui.club
 
 import android.graphics.Typeface
@@ -146,7 +147,7 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
             onItemClicked = { articleItem ->
                 findNavController().navigate(
                     ClubFragmentDirections.actionClubFragmentToClubBoardFragment(
-                        clubName = articleItem.clubNameText
+                        clubId = articleItem.articleId
                     )
                 )
             },

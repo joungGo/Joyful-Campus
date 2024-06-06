@@ -96,7 +96,6 @@
         android:label="ChatDetailFragment"
         tools:layout="@layout/fragment_chatdetail" />
 
-
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.joyfulcampus.ui.chat.userlist.UserFragment"
@@ -109,14 +108,16 @@
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubBoardFragment"
         android:label="ClubBoardFragment">
         <argument
-            android:name="clubName"
+            android:name="clubId"
             app:argType="string" />
         <action
             android:id="@+id/action_clubBoardFragment_to_introInputFragment"
-            app:destination="@id/introInputFragment" />
-        <action
-            android:id="@+id/action_clubBoardFragment_to_noticeInputFragment"
-            app:destination="@id/noticeInputFragment" />
+            app:destination="@id/introInputFragment">
+            <argument
+                android:name="clubId"
+                app:argType="string"
+                app:nullable="false" />
+        </action>
     </fragment>
 
     <!-- ClubBoard Tabs -->
@@ -142,19 +143,16 @@
     <fragment
         android:id="@+id/clubNoticeFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubNoticeFragment">
-        <action
-            android:id="@+id/action_clubNoticeFragment_to_noticeInputFragment"
-            app:destination="@id/noticeInputFragment" />
     </fragment>
 
     <!-- Input Fragments -->
     <fragment
         android:id="@+id/introInputFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.input.IntroInputFragment"
-        android:label="IntroInputFragment" />
-
-    <fragment
-        android:id="@+id/noticeInputFragment"
-        android:name="com.example.joyfulcampus.ui.club.clubform.input.NoticeInputFragment"
-        android:label="NoticeInputFragment" />
+        tools:layout="@layout/fragment_intro_input">
+        <argument
+            android:name="clubId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

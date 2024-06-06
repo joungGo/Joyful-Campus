@@ -70,11 +70,13 @@
     <string name="tab_notice">공고문</string>
 
     <!-- Input page strings -->
+    <string name="input_notice_interview">Interview</string>
+    <string name="input_club_image">Upload Image</string>
     <string name="input_club_name">Enter Club Name</string>
     <string name="input_club_description">Enter Short Description</string>
     <string name="input_club_long_description">Enter Detailed Description</string>
     <string name="input_notice_club_name">Enter Club Name</string>
     <string name="input_notice_recruitment_period">Enter Recruitment Period</string>
-    <string name="input_notice_interview">Enter Interview Details</string>
+    <string name="fab">Enter Interview Details</string>
     <string name="input_notice_content">Enter Notice Content</string>
 </resources>
