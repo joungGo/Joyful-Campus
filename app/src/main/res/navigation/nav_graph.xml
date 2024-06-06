@@ -31,14 +31,7 @@
             app:destination="@id/bookMarkArticleFragment" />
         <action
             android:id="@+id/action_clubFragment_to_clubBoardFragment"
-            app:destination="@id/clubBoardFragment">
-            <argument
-                android:name="clubId"
-                app:argType="string" />
-            <argument
-                android:name="clubName"
-                app:argType="string" />
-        </action>
+            app:destination="@id/clubBoardFragment" />
     </fragment>
 
     <fragment
@@ -117,26 +110,14 @@
         <argument
             android:name="clubId"
             app:argType="string" />
-        <argument
-            android:name="clubName"
-            app:argType="string" />
         <action
             android:id="@+id/action_clubBoardFragment_to_introInputFragment"
             app:destination="@id/introInputFragment">
             <argument
                 android:name="clubId"
-                app:argType="string" />
+                app:argType="string"
+                app:nullable="false" />
         </action>
-        <action
-            android:id="@+id/action_clubBoardFragment_to_noticeInputFragment"
-            app:destination="@id/noticeInputFragment">
-            <argument
-                android:name="clubId"
-                app:argType="string" />
-        </action>
-        <action
-            android:id="@+id/action_clubBoardFragment_to_clubIntroFragment"
-            app:destination="@id/clubIntroFragment" />
     </fragment>
 
     <!-- ClubBoard Tabs -->
@@ -144,73 +125,34 @@
         android:id="@+id/clubIntroFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubIntroFragment"
         android:label="ClubIntroFragment">
-        <argument
-            android:name="clubId"
-            app:argType="string" />
         <action
             android:id="@+id/action_clubIntroFragment_to_introInputFragment"
-            app:destination="@id/introInputFragment">
-            <argument
-                android:name="clubId"
-                app:argType="string" />
-        </action>
-        <action
-            android:id="@+id/action_clubIntroFragment_to_clubBoardFragment3"
-            app:destination="@id/clubBoardFragment" />
+            app:destination="@id/introInputFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/clubFreeFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubFreeFragment"
-        android:label="ClubFreeFragment">
-        <argument
-            android:name="clubId"
-            app:argType="string" />
-    </fragment>
+        android:label="ClubFreeFragment" />
 
     <fragment
         android:id="@+id/clubActivityFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubActivityFragment"
-        android:label="ClubActivityFragment">
-        <argument
-            android:name="clubId"
-            app:argType="string" />
-    </fragment>
+        android:label="ClubActivityFragment" />
 
     <fragment
         android:id="@+id/clubNoticeFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubNoticeFragment">
-        <argument
-            android:name="clubId"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_clubNoticeFragment_to_noticeInputFragment"
-            app:destination="@id/noticeInputFragment">
-            <argument
-                android:name="clubId"
-                app:argType="string" />
-        </action>
     </fragment>
 
     <!-- Input Fragments -->
     <fragment
         android:id="@+id/introInputFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.input.IntroInputFragment"
-        android:label="IntroInputFragment">
+        tools:layout="@layout/fragment_intro_input">
         <argument
             android:name="clubId"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_introInputFragment_to_clubIntroFragment"
-            app:destination="@id/clubIntroFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/noticeInputFragment"
-        android:name="com.example.joyfulcampus.ui.club.clubform.input.NoticeInputFragment"
-        android:label="NoticeInputFragment">
-        <argument
-            android:name="clubId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="false" />
     </fragment>
 </navigation>
