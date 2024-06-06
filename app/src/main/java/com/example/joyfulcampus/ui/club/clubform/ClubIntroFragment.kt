@@ -28,6 +28,8 @@ class ClubIntroFragment : Fragment(R.layout.fragment_club_intro) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val clubId = arguments?.getString("clubId") ?: return
+
         viewModel.introData.observe(viewLifecycleOwner) { introData ->
             binding.clubName.text = introData.clubName
             binding.clubDescription.text = introData.clubDescription
@@ -40,7 +42,9 @@ class ClubIntroFragment : Fragment(R.layout.fragment_club_intro) {
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_clubBoardFragment_to_introInputFragment)
+            findNavController().navigate(
+                ClubBoardFragmentDirections.actionClubBoardFragmentToIntroInputFragment(clubId)
+            )
         }
     }
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.databinding.FragmentClubBoardBinding
@@ -14,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class ClubBoardFragment : Fragment(R.layout.fragment_club_board) {
 
     private lateinit var binding: FragmentClubBoardBinding
+    private val args: ClubBoardFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +28,8 @@ class ClubBoardFragment : Fragment(R.layout.fragment_club_board) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val clubName = arguments?.getString("clubName") ?: "동아리"
+        val clubName = args.clubName
+        val clubId = args.clubId
 
         // 툴바 설정
         val toolbar = binding.toolbar
@@ -38,7 +41,7 @@ class ClubBoardFragment : Fragment(R.layout.fragment_club_board) {
 
         // ViewPager2와 TabLayout 설정
         val viewPager = binding.viewPager
-        viewPager.adapter = ClubBoardPagerAdapter(this)
+        viewPager.adapter = ClubBoardPagerAdapter(this, clubId)
 
         val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -53,15 +56,23 @@ class ClubBoardFragment : Fragment(R.layout.fragment_club_board) {
     }
 }
 
-class ClubBoardPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class ClubBoardPagerAdapter(fragment: Fragment, private val clubId: String) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 4
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> ClubIntroFragment()
-            1 -> ClubFreeFragment()
-            2 -> ClubActivityFragment()
-            3 -> ClubNoticeFragment()
+            0 -> ClubIntroFragment().apply {
+                arguments = Bundle().apply { putString("clubId", clubId) }
+            }
+            1 -> ClubFreeFragment().apply {
+                arguments = Bundle().apply { putString("clubId", clubId) }
+            }
+            2 -> ClubActivityFragment().apply {
+                arguments = Bundle().apply { putString("clubId", clubId) }
+            }
+            3 -> ClubNoticeFragment().apply {
+                arguments = Bundle().apply { putString("clubId", clubId) }
+            }
             else -> throw IllegalStateException("Unexpected position $position")
         }
     }
