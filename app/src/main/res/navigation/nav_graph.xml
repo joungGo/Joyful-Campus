@@ -108,7 +108,7 @@
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubBoardFragment"
         android:label="ClubBoardFragment">
         <argument
-            android:name="clubName"
+            android:name="clubId"
             app:argType="string" />
         <action
             android:id="@+id/action_clubBoardFragment_to_introInputFragment"
