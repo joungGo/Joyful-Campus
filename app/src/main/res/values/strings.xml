@@ -24,6 +24,14 @@
     <string name="Logout">Logout</string>
 
     <string name="default_notification_channel_id">default_notification_channel_id</string>
+    <string name="accountmanagement">계정 관리</string>
+    <string name="id">아이디</string>
+    <string name="changepassword">비밀번호 변경</string>
+    <string name="informationuse">이용 안내</string>
+    <string name="announcement">공지사항</string>
+    <string name="question">문의하기</string>
+    <string name="appversion">앱 버전</string>
+    <string name="privacypolicy">개인정보 처리 방침</string>
 
     <string-array name="category_array">
         <item>스포츠</item>
@@ -62,11 +70,13 @@
     <string name="tab_notice">공고문</string>
 
     <!-- Input page strings -->
+    <string name="input_notice_interview">Interview</string>
+    <string name="input_club_image">Upload Image</string>
     <string name="input_club_name">Enter Club Name</string>
     <string name="input_club_description">Enter Short Description</string>
     <string name="input_club_long_description">Enter Detailed Description</string>
     <string name="input_notice_club_name">Enter Club Name</string>
     <string name="input_notice_recruitment_period">Enter Recruitment Period</string>
-    <string name="input_notice_interview">Enter Interview Details</string>
+    <string name="fab">Enter Interview Details</string>
     <string name="input_notice_content">Enter Notice Content</string>
 </resources>

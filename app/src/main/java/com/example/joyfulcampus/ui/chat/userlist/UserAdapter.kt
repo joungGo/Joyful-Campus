@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.joyfulcampus.databinding.ItemUserBinding
 
 class UserAdapter(private val onClick: (UserItem) -> Unit): ListAdapter<UserItem, UserAdapter.ViewHolder>(differ) {
@@ -12,6 +13,7 @@ class UserAdapter(private val onClick: (UserItem) -> Unit): ListAdapter<UserItem
         fun bind(item: UserItem){
             binding.nicknameTextView.text = item.username
             binding.useremailTextView.text = item.useremail
+            Glide.with(binding.profileImageView).load(item.userprofileurl).into(binding.profileImageView)
             binding.root.setOnClickListener {
                 onClick(item)
             }

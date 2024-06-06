@@ -3,6 +3,8 @@ package com.example.joyfulcampus.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.joyfulcampus.MainActivity
+import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key.Companion.DB_URL
 import com.example.joyfulcampus.data.Key.Companion.DB_USERS
 import com.example.joyfulcampus.databinding.ActivitySignUpBinding
@@ -20,6 +22,12 @@ class SignUpActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //      상태창 색 입히기
+        this.window.apply {
+            statusBarColor = resources.getColor(R.color.gray_cc,null)
+        }
+
 
 //      회원가입 버튼
         binding.signupButton.setOnClickListener {
@@ -49,19 +57,29 @@ class SignUpActivity: AppCompatActivity() {
                             user["username"] = username
                             user["useremail"] = email
                             user["fcmToken"] = token
+                            user["userprofileurl"] = ""
 
                             Firebase.database(DB_URL).reference.child(DB_USERS).child(userId).updateChildren(user)
 
                             Snackbar.make(binding.root, "회원가입에 성공했습니다. ", Snackbar.LENGTH_SHORT).show()
 
                             val intent = Intent(this, AuthActivity::class.java)
+                            intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent)
                             finish()
-                        } // 예외 처릭 가능 .addOnFailureListener()
+                        } // 예외 처리 가능 .addOnFailureListener()
                     } else {
                         Snackbar.make(binding.root, "회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
                     }
                 }
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Close the app when the back button is pressed
+        val intent = Intent(this, AuthActivity::class.java)
+        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent)
+        finish()
     }
 }

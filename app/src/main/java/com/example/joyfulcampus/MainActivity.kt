@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        setchatsidebar()
 
         askNotificationPermission()
 
@@ -142,6 +144,11 @@ class MainActivity : AppCompatActivity() {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+    }
+
+    private fun setchatsidebar(){
+        binding.chatSidebarBackground.isVisible = false
+        binding.chatSidebar.isVisible = false
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

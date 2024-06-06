@@ -28,16 +28,22 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//      상태창 색 입히기
+        this.window.apply {
+            statusBarColor = resources.getColor(R.color.gray_cc,null)
+        }
+
         var currentUser = Firebase.auth.currentUser
 
-//      로그아웃 버튼
+//      로그인아웃 버튼
         binding.authloginoutbutton.setOnClickListener {
-            if (currentUser == null) { //로그아웃
+            if (currentUser == null) { //로그인
                 initviewToSignOutState()
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent)
                 finish()
-            } else { //로그인
+            } else { //로그아웃
                 Firebase.auth.signOut()
                 initviewToSignOutState()
                 currentUser = null
@@ -51,6 +57,7 @@ class AuthActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else { // 로그인 상태일 때
                 val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent)
                 finish()
             }
@@ -60,10 +67,17 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.setOnClickListener {
             if (currentUser == null) {
                 val intent = Intent(this, SignUpActivity::class.java)
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent)
                 finish()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Close the app when the back button is pressed
+        finishAffinity()
     }
 
     //로그인 상태일 때 변경될 화면
@@ -78,4 +92,6 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.isEnabled = true
 
     }
+
+
 }

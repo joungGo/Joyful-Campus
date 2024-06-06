@@ -57,12 +57,25 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/header_sidebar"
         app:itemTextColor="@color/black"
-        android:background="@android:color/white"
+        android:background="#FFFFFF"
         app:menu="@menu/menu_sidebar">
     </com.google.android.material.navigation.NavigationView>
 
 
+    <FrameLayout
+        android:id="@+id/chat_sidebar_background"
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/chat_sidebar"
+            android:layout_width="276dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            >
+        </FrameLayout>
+    </FrameLayout>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

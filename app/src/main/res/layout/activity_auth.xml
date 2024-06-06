@@ -3,43 +3,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_1"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
-    <Button
-        android:id="@+id/authstartbutton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Join a Campus"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="380dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome To \nCampus"
+            android:textStyle="bold"
+            android:textColor="#3F75FF"
+            android:textSize="30sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
         />
 
-    <Button
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="편안한 캠퍼스에 오신걸 환영합니다."
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:textSize="13sp"
+            android:textColor="#9CC4FF"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/authframelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="170dp"
+        android:background="@drawable/authbackgrounbox"
+        />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="편안한 캠퍼스"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/authframelayout"
+            app:layout_constraintBottom_toTopOf="@id/authstartbutton"
+            />
+
+
+        <TextView
+            android:id="@+id/authstartbutton"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:text="Join a Campus"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="#3F75FF"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="500dp"
+            android:background="@drawable/authbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+    <TextView
         android:id="@+id/authsignupbutton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
+        android:layout_marginTop="10dp"
         android:text="Sign Up"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/authbox_1"
+        android:gravity="center"
         android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="@id/authstartbutton"
         app:layout_constraintEnd_toStartOf="@id/authloginoutbutton"
         app:layout_constraintTop_toBottomOf="@+id/authstartbutton"
         />
-    <Button
+
+    <TextView
         android:id="@+id/authloginoutbutton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="@id/authsignupbutton"
         app:layout_constraintTop_toBottomOf="@+id/authstartbutton"
         android:text="Login"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/authbox_1"
+        android:gravity="center"
         android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="@id/authstartbutton"
         />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

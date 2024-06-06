@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:shape="rectangle" >
+    <solid android:color="#FFFFFF"/>
+<!--    각진 정도 -->
+    <corners
+        android:bottomLeftRadius="250dp"
+        android:bottomRightRadius="250dp"
+        android:topLeftRadius="250dp"
+        android:topRightRadius="250dp"/>
+<!--    모서리 두께 색상 -->
+    <stroke
+        android:width="0.5dp"
+        android:color="#000000" />
+</shape>
