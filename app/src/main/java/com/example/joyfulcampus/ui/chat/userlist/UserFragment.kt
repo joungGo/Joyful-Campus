@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import java.util.UUID
 
-class UserFragment: Fragment(R.layout.fragment_userlist) {
+class UserFragment : Fragment(R.layout.fragment_userlist) {
 
     private lateinit var binding: FragmentUserlistBinding
 
@@ -30,80 +30,75 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
 
         val currentUser = Firebase.auth.currentUser
 
-        if(currentUser == null) {
-            Snackbar.make(binding.root, "로그인 후 이용해주세요", Snackbar.LENGTH_SHORT).show()
-        } else {
-            val userlistAdapter = UserAdapter { otherUser ->
-                val myUserId = Firebase.auth.currentUser?.uid ?: ""
-                val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId)
-                    .child(otherUser.userId ?: "")
+        val userlistAdapter = UserAdapter { otherUser ->
+            val myUserId = Firebase.auth.currentUser?.uid ?: ""
+            val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId)
+                .child(otherUser.userId ?: "")
 
 //              데이터 가져오기
-                chatRoomDB.get().addOnSuccessListener {
+            chatRoomDB.get().addOnSuccessListener {
 
-                    var chatRoomId = ""
-                    if (it.value != null) {
-                        // 데이터가 존재
-                        val chatRoom = it.getValue(ChatRoomItem::class.java)
-                        chatRoomId = chatRoom?.chatRoomId ?: ""
+                var chatRoomId = ""
+                if (it.value != null) {
+                    // 데이터가 존재
+                    val chatRoom = it.getValue(ChatRoomItem::class.java)
+                    chatRoomId = chatRoom?.chatRoomId ?: ""
 
-                    } else {
-                        // 데이터없으니 틀 생성
-                        chatRoomId = UUID.randomUUID().toString()
-                        val newChatRoom = ChatRoomItem(
-                            chatRoomId = chatRoomId,
-                            otherUserName = otherUser.username,
-                            otherUserId = otherUser.userId
-                        )
-                        chatRoomDB.setValue(newChatRoom)
-                    }
-
-
-                    val chatdetailFragment = ChatDetailFragment()
-//                  fragment 간 정보 및 fragment 이동
-                    val bundle = Bundle()
-                    bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, otherUser.userId)
-                    bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomId)
-
-                    chatdetailFragment.arguments = bundle
-
-                    parentFragmentManager.beginTransaction()
-                        .apply {
-                            replace(R.id.frameLayout, chatdetailFragment)
-                            addToBackStack(null)
-                            commit()
-                        }
+                } else {
+                    // 데이터없으니 틀 생성
+                    chatRoomId = UUID.randomUUID().toString()
+                    val newChatRoom = ChatRoomItem(
+                        chatRoomId = chatRoomId,
+                        otherUserName = otherUser.username,
+                        otherUserId = otherUser.userId
+                    )
+                    chatRoomDB.setValue(newChatRoom)
                 }
-            }
-            binding.userListRecyclerView.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = userlistAdapter
-            }
 
-            val currentUserId = Firebase.auth.currentUser?.uid ?: ""
+                val chatdetailFragment = ChatDetailFragment()
 
-            Firebase.database.reference.child(DB_USERS)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
+//                  fragment 간 정보 및 fragment 이동
+                val bundle = Bundle()
+                bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, otherUser.userId)
+                bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomId)
 
-                        val userItemList = mutableListOf<UserItem>()
+                chatdetailFragment.arguments = bundle
 
-                        snapshot.children.forEach {
-                            val user = it.getValue(UserItem::class.java)
-                            user ?: return
-
-                            if (user.userId != currentUserId) {
-                                userItemList.add(user)
-                            }
-
-                        }
-                        userlistAdapter.submitList(userItemList)
+                parentFragmentManager.beginTransaction()
+                    .apply {
+                        replace(R.id.frameLayout, chatdetailFragment)
+                        addToBackStack(null)
+                        commit()
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-
-                    }
-                })
+            }
         }
+        binding.userListRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = userlistAdapter
+        }
+
+        val currentUserId = Firebase.auth.currentUser?.uid ?: ""
+
+        Firebase.database.reference.child(DB_USERS)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    val userItemList = mutableListOf<UserItem>()
+
+                    snapshot.children.forEach {
+                        val user = it.getValue(UserItem::class.java)
+                        user ?: return
+
+                        if (user.userId != currentUserId) {
+                            userItemList.add(user)
+                        }
+                    }
+                    userlistAdapter.submitList(userItemList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
     }
 }
