@@ -40,7 +40,7 @@ class AuthActivity : AppCompatActivity() {
             if (currentUser == null) { //로그인
                 initviewToSignOutState()
                 val intent = Intent(this, LoginActivity::class.java)
-                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
                 finish()
             } else { //로그아웃
@@ -57,7 +57,7 @@ class AuthActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else { // 로그인 상태일 때
                 val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
                 finish()
             }
@@ -67,7 +67,7 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.setOnClickListener {
             if (currentUser == null) {
                 val intent = Intent(this, SignUpActivity::class.java)
-                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
                 finish()
             }

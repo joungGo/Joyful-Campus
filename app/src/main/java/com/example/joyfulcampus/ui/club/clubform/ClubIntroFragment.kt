@@ -34,7 +34,7 @@ class ClubIntroFragment : Fragment(R.layout.fragment_club_intro) {
                 Glide.with(this).load(imageUrl).into(binding.clubImage)
             }
 
-        // FloatingActionButton 클릭 리스너 설정
+        // FloatingActionButton 클릭 리스너 설정.
         binding.fab.setOnClickListener {
             val action = ClubBoardFragmentDirections.actionClubBoardFragmentToIntroInputFragment(clubId)
             findNavController().navigate(action)

@@ -11,6 +11,7 @@ import com.example.joyfulcampus.data.Key.Companion.DB_USERS
 import com.example.joyfulcampus.databinding.FragmentUserlistBinding
 import com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment
 import com.example.joyfulcampus.ui.chat.chatlist.ChatRoomItem
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
@@ -19,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import java.util.UUID
 
-class UserFragment: Fragment(R.layout.fragment_userlist) {
+class UserFragment : Fragment(R.layout.fragment_userlist) {
 
     private lateinit var binding: FragmentUserlistBinding
 
@@ -27,13 +28,14 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentUserlistBinding.bind(view)
 
-
+        val currentUser = Firebase.auth.currentUser
 
         val userlistAdapter = UserAdapter { otherUser ->
             val myUserId = Firebase.auth.currentUser?.uid ?: ""
-            val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId).child(otherUser.userId ?: "")
+            val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId)
+                .child(otherUser.userId ?: "")
 
-//          데이터 가져오기
+//              데이터 가져오기
             chatRoomDB.get().addOnSuccessListener {
 
                 var chatRoomId = ""
@@ -53,10 +55,9 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                     chatRoomDB.setValue(newChatRoom)
                 }
 
-
-
                 val chatdetailFragment = ChatDetailFragment()
-//              fragment 간 정보 및 fragment 이동
+
+//                  fragment 간 정보 및 fragment 이동
                 val bundle = Bundle()
                 bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, otherUser.userId)
                 bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomId)
@@ -64,7 +65,7 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
                 chatdetailFragment.arguments = bundle
 
                 parentFragmentManager.beginTransaction()
-                    .apply{
+                    .apply {
                         replace(R.id.frameLayout, chatdetailFragment)
                         addToBackStack(null)
                         commit()
@@ -78,26 +79,26 @@ class UserFragment: Fragment(R.layout.fragment_userlist) {
 
         val currentUserId = Firebase.auth.currentUser?.uid ?: ""
 
-        Firebase.database.reference.child(DB_USERS).addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        Firebase.database.reference.child(DB_USERS)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
 
-                val userItemList = mutableListOf<UserItem>()
+                    val userItemList = mutableListOf<UserItem>()
 
-                snapshot.children.forEach {
-                    val user = it.getValue(UserItem::class.java)
-                    user ?: return
+                    snapshot.children.forEach {
+                        val user = it.getValue(UserItem::class.java)
+                        user ?: return
 
-                    if (user.userId != currentUserId) {
-                        userItemList.add(user)
+                        if (user.userId != currentUserId) {
+                            userItemList.add(user)
+                        }
                     }
+                    userlistAdapter.submitList(userItemList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
 
                 }
-                userlistAdapter.submitList(userItemList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
+            })
     }
 }
