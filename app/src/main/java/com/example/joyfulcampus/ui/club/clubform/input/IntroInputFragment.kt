@@ -17,6 +17,7 @@ import java.util.*
 class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
     private lateinit var binding: FragmentIntroInputBinding
     private var selectedImageUri: Uri? = null
+    private var currentImageUrl: String? = null
 
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -31,6 +32,8 @@ class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
 
         val clubId = arguments?.getString("clubId") ?: return
 
+        loadClubData(clubId)
+
         binding.inputClubImage.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
@@ -43,9 +46,27 @@ class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
             if (selectedImageUri != null) {
                 uploadImageAndSaveData(clubId, clubName, clubDescription, clubLongDescription, selectedImageUri!!)
             } else {
-                saveData(clubId, clubName, clubDescription, clubLongDescription, null)
+                saveData(clubId, clubName, clubDescription, clubLongDescription, currentImageUrl)
             }
         }
+    }
+
+    private fun loadClubData(clubId: String) {
+        Firebase.firestore.collection("bulletinBoard").document(clubId)
+            .get()
+            .addOnSuccessListener { document ->
+                val clubName = document.getString("clubName")
+                val intro = document.getString("intro")
+                val longDescription = document.getString("longDescription")
+                currentImageUrl = document.getString("imageUrl")
+
+                binding.inputClubName.setText(clubName)
+                binding.inputClubDescription.setText(intro)
+                binding.inputClubLongDescription.setText(longDescription)
+                currentImageUrl?.let {
+                    Glide.with(this).load(it).into(binding.inputClubImage)
+                }
+            }
     }
 
     private fun uploadImageAndSaveData(clubId: String, clubName: String, clubDescription: String, clubLongDescription: String, imageUri: Uri) {
