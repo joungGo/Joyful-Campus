@@ -35,6 +35,7 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:paddingTop="10dp"
             android:background="#CCE6FF"
             app:menu="@menu/menu_chat"
             app:itemTextColor="@drawable/bottom_navigation_color"
@@ -45,8 +46,10 @@
     <ImageView
         android:id="@+id/chattoolbarimage"
         android:layout_width="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:layout_height="64dp"
-        android:src="@drawable/chattoolbarimage"
+        android:src="@drawable/chattoolimage_2"
         android:clickable="true"
         />
 
@@ -60,7 +63,8 @@
             android:layout_width="match_parent"
             android:background="@color/white_1"
             android:layout_height="?attr/actionBarSize"
-            app:title="편안한 Campus" />
+            app:title="편안한 Campus"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 

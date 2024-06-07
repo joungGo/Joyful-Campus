@@ -13,7 +13,9 @@ class UserAdapter(private val onClick: (UserItem) -> Unit): ListAdapter<UserItem
         fun bind(item: UserItem){
             binding.nicknameTextView.text = item.username
             binding.useremailTextView.text = item.useremail
-            Glide.with(binding.profileImageView).load(item.userprofileurl).into(binding.profileImageView)
+            if (item.userprofileurl == "") else {
+                Glide.with(binding.profileImageView).load(item.userprofileurl).into(binding.profileImageView)
+            }
             binding.root.setOnClickListener {
                 onClick(item)
             }
