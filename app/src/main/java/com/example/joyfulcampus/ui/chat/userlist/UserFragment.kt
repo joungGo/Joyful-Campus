@@ -50,14 +50,16 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                     val newChatRoom = ChatRoomItem(
                         chatRoomId = chatRoomId,
                         otherUserName = otherUser.username,
-                        otherUserId = otherUser.userId
+                        otherUserId = otherUser.userId,
+                        chatroomimageurl = otherUser.userprofileurl
+
                     )
                     chatRoomDB.setValue(newChatRoom)
                 }
 
                 val chatdetailFragment = ChatDetailFragment()
 
-//                  fragment 간 정보 및 fragment 이동
+//              fragment 간 정보 및 fragment 이동
                 val bundle = Bundle()
                 bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, otherUser.userId)
                 bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomId)

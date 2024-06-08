@@ -29,6 +29,8 @@ class SignUpActivity : AppCompatActivity() {
             statusBarColor = resources.getColor(R.color.gray_cc, null)
         }
 
+        binding.signupButton1.isVisible = true
+
 
 // Sign up button
         binding.signupButton1.setOnClickListener {
@@ -41,21 +43,19 @@ class SignUpActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "공백이 있습니다. 정확하게 입력해주세요.", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
+//              이메일 비번
                 Firebase.auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val currentUser = Firebase.auth.currentUser
+//                          이메일 링크
                             currentUser?.sendEmailVerification()?.addOnCompleteListener { verificationTask ->
                                 if (verificationTask.isSuccessful) {
                                     Snackbar.make(binding.root, "확인 링크가 이메일로 전송되었습니다. 이메일을 확인해 주세요.",Snackbar.LENGTH_SHORT).show()
-                                    binding.signupButton1.isVisible = false
                                 } else {
-                                    Snackbar.make(
-                                        binding.root,
-                                        "Failed to send verification email.",
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
+                                    Snackbar.make(binding.root, "버튼 1 지워짐 ",Snackbar.LENGTH_SHORT).show()
                                 }
+                                binding.signupButton1.isVisible = false
                             }
 
                             // Check email verification status after some time or prompt user to check email
@@ -66,6 +66,7 @@ class SignUpActivity : AppCompatActivity() {
                                             val userId = currentUser.uid
                                             Firebase.messaging.token.addOnCompleteListener { tokenTask ->
                                                 val token = tokenTask.result
+
                                                 // Save to Firebase
                                                 val user = mutableMapOf<String, Any>()
                                                 user["userId"] = userId
@@ -73,6 +74,7 @@ class SignUpActivity : AppCompatActivity() {
                                                 user["useremail"] = email
                                                 user["fcmToken"] = token
                                                 user["userprofileurl"] = ""
+                                                user["EmailAuthentication"] = ""
 
                                                 Firebase.database(DB_URL).reference.child(DB_USERS)
                                                     .child(userId).updateChildren(user)
