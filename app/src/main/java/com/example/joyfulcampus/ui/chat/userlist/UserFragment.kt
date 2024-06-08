@@ -43,6 +43,14 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                     // 데이터가 존재
                     val chatRoom = it.getValue(ChatRoomItem::class.java)
                     chatRoomId = chatRoom?.chatRoomId ?: ""
+                    val newChatRoom = ChatRoomItem(
+                        chatRoomId = chatRoomId,
+                        otherUserName = otherUser.username,
+                        otherUserId = otherUser.userId,
+                        chatroomimageurl = otherUser.userprofileurl
+                    )
+                    chatRoomDB.setValue(newChatRoom)
+
 
                 } else {
                     // 데이터없으니 틀 생성
@@ -52,7 +60,6 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                         otherUserName = otherUser.username,
                         otherUserId = otherUser.userId,
                         chatroomimageurl = otherUser.userprofileurl
-
                     )
                     chatRoomDB.setValue(newChatRoom)
                 }
@@ -86,13 +93,17 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     val userItemList = mutableListOf<UserItem>()
+                    val chatRoomItemItemList = mutableListOf<ChatRoomItem>()
 
                     snapshot.children.forEach {
                         val user = it.getValue(UserItem::class.java)
+                        val chatroom = it.getValue(ChatRoomItem::class.java)
                         user ?: return
+                        chatroom ?: return
 
                         if (user.userId != currentUserId) {
                             userItemList.add(user)
+                            chatRoomItemItemList.add(chatroom)
                         }
                     }
                     userlistAdapter.submitList(userItemList)
