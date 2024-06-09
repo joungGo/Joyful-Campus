@@ -45,7 +45,6 @@ class ChatListAdapter(private val onClick: (ChatRoomItem) -> Unit): ListAdapter<
             override fun areContentsTheSame(oldItem: ChatRoomItem, newItem: ChatRoomItem): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 }

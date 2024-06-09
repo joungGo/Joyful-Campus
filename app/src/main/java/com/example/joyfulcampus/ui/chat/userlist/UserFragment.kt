@@ -35,7 +35,7 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
             val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId)
                 .child(otherUser.userId ?: "")
 
-//              데이터 가져오기
+//          데이터 가져오기
             chatRoomDB.get().addOnSuccessListener {
 
                 var chatRoomId = ""
@@ -43,13 +43,14 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                     // 데이터가 존재
                     val chatRoom = it.getValue(ChatRoomItem::class.java)
                     chatRoomId = chatRoom?.chatRoomId ?: ""
-                    val newChatRoom = ChatRoomItem(
-                        chatRoomId = chatRoomId,
-                        otherUserName = otherUser.username,
-                        otherUserId = otherUser.userId,
-                        chatroomimageurl = otherUser.userprofileurl
+                    val updates = mapOf(
+                        "chatRoomId" to chatRoomId,
+                        "otherUserName" to otherUser.username,
+                        "otherUserId" to otherUser.userId,
+                        "chatroomimageurl" to otherUser.userprofileurl
                     )
-                    chatRoomDB.setValue(newChatRoom)
+
+                    chatRoomDB.updateChildren(updates)
 
 
                 } else {

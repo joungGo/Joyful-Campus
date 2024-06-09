@@ -135,7 +135,6 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
             val intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun uploadImage(
