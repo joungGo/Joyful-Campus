@@ -104,6 +104,7 @@
                 android:background="@drawable/sendbox"
                 android:layout_marginStart="5dp"
                 android:hint="메시지를 입력하세요."
+                android:textColor="@color/black_1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:textColorHint="#57000000" />

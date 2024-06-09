@@ -5,5 +5,5 @@ data class ChatRoomItem (
     val lastMessage: String? = null,
     val otherUserName: String? = null,
     val otherUserId: String? = null,
-    var chatroomprofileurl: String? = null,
+    var chatroomimageurl: String? = null,
     )

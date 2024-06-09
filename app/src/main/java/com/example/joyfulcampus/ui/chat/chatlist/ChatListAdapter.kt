@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.joyfulcampus.databinding.ItemChatroomBinding
 
 class ChatListAdapter(private val onClick: (ChatRoomItem) -> Unit): ListAdapter<ChatRoomItem, ChatListAdapter.ViewHolder>(differ) {
@@ -12,6 +13,9 @@ class ChatListAdapter(private val onClick: (ChatRoomItem) -> Unit): ListAdapter<
         fun bind(item: ChatRoomItem){
             binding.nicknameTextView.text = item.otherUserName
             binding.lastMessageTextView.text = item.lastMessage
+            if (item.chatroomimageurl == "") else {
+                Glide.with(binding.profileImageView).load(item.chatroomimageurl).into(binding.profileImageView)
+            }
             binding.root.setOnClickListener {
                 onClick(item)
             }

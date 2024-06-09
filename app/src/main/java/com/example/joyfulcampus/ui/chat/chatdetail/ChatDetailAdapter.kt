@@ -33,6 +33,7 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
                     binding.mychatImage.isVisible = false
                     binding.mymessageTextView.isVisible = false
                     binding.profileImageView.isVisible = true
+                    Glide.with(binding.profileImageView).load(otherUserItem?.userprofileurl).into(binding.profileImageView)
                     binding.nicknameTextView.isVisible = true
                     binding.messageTextView.isVisible = true
                     binding.nicknameTextView.text = otherUserItem?.username
@@ -43,6 +44,7 @@ class ChatDetailAdapter : ListAdapter<ChatDetailItem, ChatDetailAdapter.ViewHold
                     binding.mychatImage.isVisible = false
                     binding.mymessageTextView.isVisible = false
                     binding.profileImageView.isVisible = true
+                    Glide.with(binding.profileImageView).load(otherUserItem?.userprofileurl).into(binding.profileImageView)
                     binding.nicknameTextView.isVisible = true
                     binding.messageTextView.isVisible = false
                     binding.nicknameTextView.text = otherUserItem?.username
