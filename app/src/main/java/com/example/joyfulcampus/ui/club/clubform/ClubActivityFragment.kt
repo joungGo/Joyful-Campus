@@ -3,6 +3,7 @@ package com.example.joyfulcampus.ui.club.clubform
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.databinding.FragmentClubActivityBinding
 
@@ -16,6 +17,12 @@ class ClubActivityFragment : Fragment(R.layout.fragment_club_activity) {
         val clubId = arguments?.getString("clubId") ?: return
 
         // Firestore에서 데이터를 로드하고 UI를 업데이트하는 코드 추가
+
+        // FloatingActionButton 클릭 리스너 설정.
+        binding.addActivityFab.setOnClickListener {
+            val action = ClubBoardFragmentDirections.actionClubBoardFragmentToActivityInputFragment(clubId)
+            findNavController().navigate(action)
+        }
     }
 
     companion object {
