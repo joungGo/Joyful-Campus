@@ -7,6 +7,9 @@ import com.example.joyfulcampus.R
 import com.example.joyfulcampus.databinding.FragmentFoodBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 class FoodFragment: Fragment(R.layout.fragment_food) {
     private lateinit var binding: FragmentFoodBinding
@@ -38,11 +41,21 @@ class FoodFragment: Fragment(R.layout.fragment_food) {
 
             if (snapshot != null && snapshot.exists()) {
                 val count = snapshot.getLong("count") ?: 0
+                val timestamp = snapshot.getTimestamp("timestamp")
+
+//              timestamp 뜨는 표기 바꾸기
+                val date = timestamp?.toDate()
+                val sdf = SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초 z", Locale.getDefault())
+                sdf.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                val formattedDate = sdf.format(date)
+
                 // UI 업데이트 코드 추가
                 binding.id.text = count.toString()
+                binding.timestamp.text = formattedDate
             } else {
             }
         }
+
     }
 
 }
