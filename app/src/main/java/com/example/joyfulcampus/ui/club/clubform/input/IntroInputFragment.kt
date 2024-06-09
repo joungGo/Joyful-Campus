@@ -2,6 +2,7 @@ package com.example.joyfulcampus.ui.club.clubform.input
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -74,10 +75,12 @@ class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
         storageRef.putFile(imageUri)
             .addOnSuccessListener {
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
+                    Log.d("IntroInputFragment", "Download URL: $uri")
                     saveData(clubId, clubName, clubDescription, clubLongDescription, uri.toString())
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener {exception ->
+                Log.e("IntroInputFragment", "Image upload failed", exception)
                 // 실패 시 처리
             }
     }
@@ -94,9 +97,11 @@ class IntroInputFragment : Fragment(R.layout.fragment_intro_input) {
             .set(data)
             .addOnSuccessListener {
                 // 성공 시 처리
+                Log.d("NoticeInputFragment", "Data saved successfully")
                 findNavController().navigateUp()
             }
-            .addOnFailureListener {
+            .addOnFailureListener {exception ->
+                Log.e("NoticeInputFragment", "Data save failed", exception)
                 // 실패 시 처리
             }
     }

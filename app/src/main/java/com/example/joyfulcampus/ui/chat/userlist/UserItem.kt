@@ -5,4 +5,5 @@ data class UserItem (
     val username: String? = null,
     val useremail: String? = null,
     var userprofileurl: String? = null,
+    val EmailAuthentication: String? = null,
 )

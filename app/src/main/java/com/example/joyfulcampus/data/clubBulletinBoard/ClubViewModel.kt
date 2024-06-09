@@ -1,4 +1,4 @@
-package com.example.joyfulcampus.viewmodel
+package com.example.joyfulcampus.data.clubBulletinBoard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
