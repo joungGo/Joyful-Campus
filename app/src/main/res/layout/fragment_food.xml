@@ -4,31 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+    <TextView
+        android:id="@+id/countPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="숫자"
+        android:textSize="100sp" />
 
-        <TextView
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="숫자"
-            android:textSize="100sp" />
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/countPerson"
+        app:layout_constraintStart_toStartOf="@id/countPerson"
+        app:layout_constraintEnd_toEndOf="@id/countPerson"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:text="timestamp"
+        android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/timestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_gravity="center"
-            android:text="timestamp"
-            android:textSize="30sp"
-
-            />
-
-    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
