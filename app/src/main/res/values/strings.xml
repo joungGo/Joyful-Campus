@@ -70,6 +70,10 @@
     <string name="tab_notice">공고문</string>
 
     <!-- Input page strings -->
+    <string name="detailed_image">Detailed Image</string>
+
+    <string name="input_recruitment_period">모집 기간을 입력하세요</string>
+    <string name="input_interview">인터뷰 정보를 입력하세요</string>
     <string name="input_notice_interview">Interview</string>
     <string name="input_club_image">Upload Image</string>
     <string name="input_club_name">Enter Club Name</string>
@@ -79,4 +83,11 @@
     <string name="input_notice_recruitment_period">Enter Recruitment Period</string>
     <string name="fab">Enter Interview Details</string>
     <string name="input_notice_content">Enter Notice Content</string>
+
+    <string name="activity_image">Activity Image</string>
+    <string name="input_activity_name">Enter activity name</string>
+    <string name="input_activity_description">Enter activity description</string>
+    <string name="input_activity_long_description">Enter detailed activity description</string>
+    <string name="add_activity_photo">Add Activity Photo</string>
+    <string name="input_photo_description">Enter photo description</string>
 </resources>

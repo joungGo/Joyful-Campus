@@ -118,6 +118,22 @@
                 app:argType="string"
                 app:nullable="false" />
         </action>
+        <action
+            android:id="@+id/action_clubBoardFragment_to_noticeInputFragment"
+            app:destination="@id/noticeInputFragment">
+            <argument
+                android:name="clubId"
+                app:argType="string"
+                app:nullable="false" />
+        </action>
+        <action
+            android:id="@+id/action_clubBoardFragment_to_activityInputFragment"
+            app:destination="@id/activityInputFragment" >
+            <argument
+                android:name="clubId"
+                app:argType="string"
+                app:nullable="false" />
+        </action>
     </fragment>
 
     <!-- ClubBoard Tabs -->
@@ -138,7 +154,12 @@
     <fragment
         android:id="@+id/clubActivityFragment"
         android:name="com.example.joyfulcampus.ui.club.clubform.ClubActivityFragment"
-        android:label="ClubActivityFragment" />
+        android:label="ClubActivityFragment" >
+
+        <action
+            android:id="@+id/action_clubActivityFragment_to_activityInputFragment"
+            app:destination="@id/activityInputFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/clubNoticeFragment"
@@ -155,4 +176,13 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/noticeInputFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.input.NoticeInputFragment"
+        android:label="fragment_notice_input"
+        tools:layout="@layout/fragment_notice_input" />
+    <fragment
+        android:id="@+id/activityInputFragment"
+        android:name="com.example.joyfulcampus.ui.club.clubform.input.ActivityInputFragment"
+        android:label="ActivityInputFragment" />
 </navigation>

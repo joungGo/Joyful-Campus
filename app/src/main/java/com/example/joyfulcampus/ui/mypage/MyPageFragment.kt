@@ -41,6 +41,8 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
 
     private var selectedUrl: Uri? = null
     private var myUserId: String = ""
+    private var username: String = ""
+
 
 
     val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -74,7 +76,7 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
 
 //      이름 가져오기
         userDB.child("username").get().addOnSuccessListener {
-            val username = it.getValue(String::class.java)
+            username = it.getValue(String::class.java).toString()
             binding.usernametext.text = username ?: "No username found"
         }
 
@@ -98,7 +100,11 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
         userDB.child("userprofileurl").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userprofileurl = snapshot.getValue(String::class.java)
-                Glide.with(binding.profileimage).load(userprofileurl).into(binding.profileimage)
+                if (userprofileurl == "") {
+
+                } else {
+                    Glide.with(binding.profileimage).load(userprofileurl).into(binding.profileimage)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -129,7 +135,6 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
             val intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun uploadImage(
@@ -162,10 +167,10 @@ class MyPageFragment: Fragment(R.layout.fragment_mypage_home) {
     }
 
     private fun uploadImageprofile(userprofileurl: String){
-        val articleId = UUID.randomUUID().toString()
         val UserItem = UserItem(
             userprofileurl = userprofileurl,
-            userId = myUserId
+            userId = myUserId,
+            username = username,
         )
 
         Firebase.firestore.collection("mypage").document(myUserId)

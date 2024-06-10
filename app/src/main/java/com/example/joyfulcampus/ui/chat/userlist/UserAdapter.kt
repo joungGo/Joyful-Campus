@@ -1,5 +1,6 @@
 package com.example.joyfulcampus.ui.chat.userlist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -15,6 +16,7 @@ class UserAdapter(private val onClick: (UserItem) -> Unit): ListAdapter<UserItem
             binding.useremailTextView.text = item.useremail
             if (item.userprofileurl == "") else {
                 Glide.with(binding.profileImageView).load(item.userprofileurl).into(binding.profileImageView)
+                Log.d("userprofileurl","잘 나왔다")
             }
             binding.root.setOnClickListener {
                 onClick(item)

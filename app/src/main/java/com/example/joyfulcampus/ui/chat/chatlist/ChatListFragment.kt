@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key
+import com.example.joyfulcampus.data.Key.Companion.DB_CHAT_ROOMS
 import com.example.joyfulcampus.databinding.FragmentChatlistBinding
 import com.example.joyfulcampus.ui.chat.chatdetail.ChatDetailFragment
 import com.google.firebase.Firebase
@@ -24,6 +25,11 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
         binding = FragmentChatlistBinding.bind(view)
 
         val chatListAdapter = ChatListAdapter{ chatRoomItem ->
+            val myUserId = Firebase.auth.currentUser?.uid ?: ""
+            val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId)
+                .child(chatRoomItem.chatRoomId ?: "")
+
+
 //          fragment 간 이동
             val bundle = Bundle()
             bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, chatRoomItem.otherUserId)
@@ -45,7 +51,6 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
             adapter = chatListAdapter
         }
 
-
         val currentUserid = Firebase.auth.currentUser?.uid ?: return
         val chatRoomsDB = Firebase.database.reference.child(Key.DB_CHAT_ROOMS).child(currentUserid)
 
@@ -58,7 +63,6 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
         })
     }

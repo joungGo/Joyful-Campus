@@ -104,7 +104,6 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chatdetail) {
                 result.map {
                     it.toObject<ChatDetailItem>()
                 }
-
             }
 
 

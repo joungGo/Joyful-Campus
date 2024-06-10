@@ -35,7 +35,7 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
             val chatRoomDB = Firebase.database.reference.child(DB_CHAT_ROOMS).child(myUserId)
                 .child(otherUser.userId ?: "")
 
-//              데이터 가져오기
+//          데이터 가져오기
             chatRoomDB.get().addOnSuccessListener {
 
                 var chatRoomId = ""
@@ -43,6 +43,15 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                     // 데이터가 존재
                     val chatRoom = it.getValue(ChatRoomItem::class.java)
                     chatRoomId = chatRoom?.chatRoomId ?: ""
+                    val updates = mapOf(
+                        "chatRoomId" to chatRoomId,
+                        "otherUserName" to otherUser.username,
+                        "otherUserId" to otherUser.userId,
+                        "chatroomimageurl" to otherUser.userprofileurl
+                    )
+
+                    chatRoomDB.updateChildren(updates)
+
 
                 } else {
                     // 데이터없으니 틀 생성
@@ -50,14 +59,15 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                     val newChatRoom = ChatRoomItem(
                         chatRoomId = chatRoomId,
                         otherUserName = otherUser.username,
-                        otherUserId = otherUser.userId
+                        otherUserId = otherUser.userId,
+                        chatroomimageurl = otherUser.userprofileurl
                     )
                     chatRoomDB.setValue(newChatRoom)
                 }
 
                 val chatdetailFragment = ChatDetailFragment()
 
-//                  fragment 간 정보 및 fragment 이동
+//              fragment 간 정보 및 fragment 이동
                 val bundle = Bundle()
                 bundle.putString(ChatDetailFragment.EXTRA_OTHER_USER_ID, otherUser.userId)
                 bundle.putString(ChatDetailFragment.EXTRA_CHAT_ROOM_ID, chatRoomId)
@@ -84,13 +94,17 @@ class UserFragment : Fragment(R.layout.fragment_userlist) {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     val userItemList = mutableListOf<UserItem>()
+                    val chatRoomItemItemList = mutableListOf<ChatRoomItem>()
 
                     snapshot.children.forEach {
                         val user = it.getValue(UserItem::class.java)
+                        val chatroom = it.getValue(ChatRoomItem::class.java)
                         user ?: return
+                        chatroom ?: return
 
                         if (user.userId != currentUserId) {
                             userItemList.add(user)
+                            chatRoomItemItemList.add(chatroom)
                         }
                     }
                     userlistAdapter.submitList(userItemList)
