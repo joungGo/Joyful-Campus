@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
+@Suppress("DEPRECATION")
 class LoginActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -40,7 +41,6 @@ class LoginActivity: AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val intent = Intent(this, MainActivity::class.java)
-                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                         startActivity(intent)
                         finish()
                         Snackbar.make(binding.root, "로그인에 성공했습니다.", Snackbar.LENGTH_SHORT).show()
@@ -57,8 +57,8 @@ class LoginActivity: AppCompatActivity() {
         super.onBackPressed()
         // Close the app when the back button is pressed
         val intent = Intent(this, AuthActivity::class.java)
-        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
     }
 }

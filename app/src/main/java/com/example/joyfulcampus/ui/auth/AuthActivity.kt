@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
+@Suppress("DEPRECATION")
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
@@ -40,8 +41,8 @@ class AuthActivity : AppCompatActivity() {
             if (currentUser == null) { //로그인
                 initviewToSignOutState()
                 val intent = Intent(this, LoginActivity::class.java)
-                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 finish()
             } else { //로그아웃
                 Firebase.auth.signOut()
@@ -57,7 +58,6 @@ class AuthActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else { // 로그인 상태일 때
                 val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
                 finish()
             }
@@ -67,8 +67,8 @@ class AuthActivity : AppCompatActivity() {
         binding.authsignupbutton.setOnClickListener {
             if (currentUser == null) {
                 val intent = Intent(this, SignUpActivity::class.java)
-                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                 finish()
             }
         }

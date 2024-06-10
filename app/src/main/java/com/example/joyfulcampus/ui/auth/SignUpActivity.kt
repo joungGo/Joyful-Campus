@@ -15,6 +15,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.database.database
 import com.google.firebase.messaging.messaging
 
+@Suppress("DEPRECATION")
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
@@ -53,7 +54,6 @@ class SignUpActivity : AppCompatActivity() {
                                 if (verificationTask.isSuccessful) {
                                     Snackbar.make(binding.root, "확인 링크가 이메일로 전송되었습니다. 이메일을 확인해 주세요.",Snackbar.LENGTH_SHORT).show()
                                 } else {
-                                    Snackbar.make(binding.root, "버튼 1 지워짐 ",Snackbar.LENGTH_SHORT).show()
                                 }
                                 binding.signupButton1.isVisible = false
                             }
@@ -86,8 +86,8 @@ class SignUpActivity : AppCompatActivity() {
                                                 ).show()
 
                                                 val intent = Intent(this, AuthActivity::class.java)
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                                                 startActivity(intent)
+                                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                                                 finish()
                                             }
                                         } else {
@@ -113,8 +113,8 @@ class SignUpActivity : AppCompatActivity() {
         super.onBackPressed()
         // Close the app when the back button is pressed
         val intent = Intent(this, AuthActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         finish()
     }
 }
