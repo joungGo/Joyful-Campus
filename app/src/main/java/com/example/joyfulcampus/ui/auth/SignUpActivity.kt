@@ -33,13 +33,13 @@ class SignUpActivity : AppCompatActivity() {
         binding.signupButton1.isVisible = true
 
 
-// Sign up button
+//      Sign up button
         binding.signupButton1.setOnClickListener {
             val username = binding.signupnameEditText.text.toString()
             val email = binding.signupemailEditText.text.toString()
             val password = binding.signuppasswordEditText.text.toString()
 
-            // Check name, email, password
+//          Check name, email, password
             if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Snackbar.make(binding.root, "공백이 있습니다. 정확하게 입력해주세요.", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -49,51 +49,62 @@ class SignUpActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val currentUser = Firebase.auth.currentUser
-//                          이메일 링크
-                            currentUser?.sendEmailVerification()?.addOnCompleteListener { verificationTask ->
-                                if (verificationTask.isSuccessful) {
-                                    Snackbar.make(binding.root, "확인 링크가 이메일로 전송되었습니다. 이메일을 확인해 주세요.",Snackbar.LENGTH_SHORT).show()
-                                } else {
-                                }
-                                binding.signupButton1.isVisible = false
-                            }
+                            if (currentUser != null) {
+                                val userId = currentUser.uid
+                                Firebase.messaging.token.addOnCompleteListener { tokenTask ->
+                                    val token = tokenTask.result
+                                    // Save to Firebase
+                                    val user = mutableMapOf<String, Any>()
+                                    user["userId"] = userId
+                                    user["username"] = username
+                                    user["useremail"] = email
+                                    user["fcmToken"] = token
+                                    user["userprofileurl"] = ""
+                                    user["EmailAuthentication"] = ""
 
-                            // Check email verification status after some time or prompt user to check email
-                            binding.signupButton2.setOnClickListener {
-                                if (currentUser != null) {
-                                    currentUser.reload().addOnCompleteListener {
-                                        if (currentUser.isEmailVerified) {
-                                            val userId = currentUser.uid
-                                            Firebase.messaging.token.addOnCompleteListener { tokenTask ->
-                                                val token = tokenTask.result
-
-                                                // Save to Firebase
-                                                val user = mutableMapOf<String, Any>()
-                                                user["userId"] = userId
-                                                user["username"] = username
-                                                user["useremail"] = email
-                                                user["fcmToken"] = token
-                                                user["userprofileurl"] = ""
-                                                user["EmailAuthentication"] = ""
-
-                                                Firebase.database(DB_URL).reference.child(DB_USERS)
-                                                    .child(userId).updateChildren(user)
-
+                                    Firebase.database(DB_URL).reference.child(
+                                        DB_USERS
+                                    )
+                                        .child(userId).updateChildren(user)
+//                              이메일 링크
+                                    currentUser.sendEmailVerification()
+                                        .addOnCompleteListener { verificationTask ->
+                                            if (verificationTask.isSuccessful) {
                                                 Snackbar.make(
                                                     binding.root,
-                                                    "성공적으로 등록되었습니다.",
+                                                    "확인 링크가 이메일로 전송되었습니다. 이메일을 확인해 주세요.",
                                                     Snackbar.LENGTH_SHORT
                                                 ).show()
-
-                                                val intent = Intent(this, AuthActivity::class.java)
-                                                startActivity(intent)
-                                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                                                finish()
                                             }
+                                            binding.signupButton1.isVisible = false
+                                        }
+                                }
+                                // Check email verification status after some time or prompt user to check email
+                                binding.signupButton2.setOnClickListener {
+                                    currentUser.reload().addOnCompleteListener {
+                                        if (currentUser.isEmailVerified) {
+
+                                            // Save to Firebase
+                                            val useremail = mutableMapOf<String, Any>()
+                                            useremail["EmailAuthentication"] = "check"
+
+                                            Firebase.database(DB_URL).reference.child(
+                                                DB_USERS
+                                            )
+                                                .child(userId).updateChildren(useremail)
+
+                                            val intent =
+                                                Intent(this, AuthActivity::class.java)
+                                            startActivity(intent)
+                                            overridePendingTransition(
+                                                R.anim.slide_in_right,
+                                                R.anim.slide_out_left
+                                            )
+                                            finish()
                                         } else {
                                             Snackbar.make(
                                                 binding.root,
-                                                "가입하려면 이메일을 인증해야 합니다.",
+                                                "이메일을 인증해야 원활한 시작이 가능합니다.",
                                                 Snackbar.LENGTH_SHORT
                                             ).show()
                                         }
@@ -106,11 +117,26 @@ class SignUpActivity : AppCompatActivity() {
                     }
             }
         }
-
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
+        var currentUser = Firebase.auth.currentUser
+        currentUser?.reload()?.addOnCompleteListener {
+            if (currentUser!!.isEmailVerified) {
+                val userId = currentUser!!.uid
+                val user = mutableMapOf<String, Any>()
+                user["EmailAuthentication"] = "check"
+                Firebase.database(DB_URL).reference.child(DB_USERS)
+                    .child(userId).updateChildren(user)
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    "이메일을 인증해야 원활한 시작이 가능합니다.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
         // Close the app when the back button is pressed
         val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)

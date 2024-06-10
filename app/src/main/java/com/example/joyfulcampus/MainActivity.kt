@@ -18,10 +18,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.joyfulcampus.data.Key.Companion.DB_URL
+import com.example.joyfulcampus.data.Key.Companion.DB_USERS
 import com.example.joyfulcampus.databinding.ActivityMainBinding
 import com.example.joyfulcampus.ui.auth.AuthActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.database.database
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,10 +40,17 @@ class MainActivity : AppCompatActivity() {
         val currentUser = Firebase.auth.currentUser
 
 
-        if(currentUser == null){
-
+        if (currentUser == null) {
             startActivity(Intent(this, AuthActivity::class.java))
             finish()
+        } else {
+            currentUser.reload().addOnCompleteListener {
+                if (currentUser.isEmailVerified) {
+                } else {
+                    startActivity(Intent(this, AuthActivity::class.java))
+                    finish()
+                }
+            }
         }
 
         setchatsidebar()
@@ -50,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
-
 
 
 // NavigationView의 메뉴 텍스트 색상 설정
@@ -66,18 +76,22 @@ class MainActivity : AppCompatActivity() {
                     openUrl("https://www.dju.ac.kr/dju/main.do")
                     true
                 }
+
                 R.id.portal -> {
                     openUrl("https://portal.dju.ac.kr/")
                     true
                 }
+
                 R.id.schedule -> {
                     openUrl("https://www.dju.ac.kr/dju/sv/schdulView/schdulCalendarView.do?mi=1166")
                     true
                 }
+
                 R.id.schedule_notice -> {
                     openUrl("https://www.dju.ac.kr/dju/na/ntt/selectNttList.do?mi=1165&bbsId=1861")
                     true
                 }
+
                 else -> false
             }
         }
@@ -96,6 +110,7 @@ class MainActivity : AppCompatActivity() {
                 binding.drawerLayout.openDrawer(GravityCompat.START)
                 return true
             }
+
             R.id.chat_bot -> {
                 // 챗봇 아이템 클릭 시 동작 작성
                 return true
@@ -146,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setchatsidebar(){
+    private fun setchatsidebar() {
         binding.chatSidebarBackground.isVisible = false
         binding.chatSidebar.isVisible = false
     }
@@ -157,7 +172,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage("알림 권한이 없으면 권한을 받을 수 있습니다.")
             .setPositiveButton("권한 허용하기") { _, _ ->
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            } .setNegativeButton("취소") { dialogInterface, _ -> dialogInterface.cancel() }
+            }.setNegativeButton("취소") { dialogInterface, _ -> dialogInterface.cancel() }
             .show()
     }
 

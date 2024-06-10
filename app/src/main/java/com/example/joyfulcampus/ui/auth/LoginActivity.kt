@@ -40,19 +40,16 @@ class LoginActivity: AppCompatActivity() {
             Firebase.auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, AuthActivity::class.java)
                         startActivity(intent)
                         finish()
-                        Snackbar.make(binding.root, "로그인에 성공했습니다.", Snackbar.LENGTH_SHORT).show()
-
                     } else {
                         Snackbar.make(binding.root, "로그인에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
                     }
                 }
-
         }
-
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         // Close the app when the back button is pressed
