@@ -50,7 +50,7 @@ class FoodFragment: Fragment(R.layout.fragment_food) {
                 val formattedDate = sdf.format(date)
 
                 // UI 업데이트 코드 추가
-                binding.id.text = count.toString()
+                binding.countPerson.text = count.toString()
                 binding.timestamp.text = formattedDate
             } else {
             }
