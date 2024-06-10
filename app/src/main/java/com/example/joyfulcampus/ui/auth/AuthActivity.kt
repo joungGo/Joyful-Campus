@@ -3,6 +3,7 @@ package com.example.joyfulcampus.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.joyfulcampus.MainActivity
 import com.example.joyfulcampus.R
 import com.example.joyfulcampus.data.Key
@@ -66,6 +67,25 @@ class AuthActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "로그인 해주세요.", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else { // 로그인 상태일 때
+                val userId = currentUser!!.uid
+                Firebase.database(Key.DB_URL).reference.child(Key.DB_USERS)
+                    .child(userId).child("EmailAuthentication").get().addOnSuccessListener{
+                        val emailauthentication = it.toString()
+                        if (emailauthentication == ""){
+//                          이메일 링크
+                            currentUser!!.sendEmailVerification()
+                                .addOnCompleteListener { verificationTask ->
+                                    if (verificationTask.isSuccessful) {
+                                        Snackbar.make(
+                                            binding.root,
+                                            "확인 링크가 이메일로 전송되었습니다. 이메일을 확인해 주세요.",
+                                            Snackbar.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                        }
+                    }
+
                 var currentUser = Firebase.auth.currentUser
                 currentUser?.reload()?.addOnCompleteListener {
                     if (currentUser!!.isEmailVerified) {
