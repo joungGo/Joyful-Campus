@@ -61,7 +61,7 @@ class ClubFragment : Fragment(R.layout.fragment_club) {
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             // 특정 사용자 ID 목록
-            val allowedUsers = listOf("jhj05804@gmail.com", "p22583@naver.com", "user3@example.com")
+            val allowedUsers = listOf("jhj05804@gmail.com", "p22582@naver.com", "user3@example.com")
 
             if (allowedUsers.contains(currentUser.email)) {
                 binding.addButton.visibility = View.VISIBLE
